@@ -40,8 +40,7 @@ module.exports = (logger) =>
                     res.clearCookie('jwt');
                     res.redirect('/auth');
                     return;
-                }
-                logger.log(`method : ${req.method} URL: ${req.originalUrl} status: 200`);                
+                }                                
                 next();
             });
         }

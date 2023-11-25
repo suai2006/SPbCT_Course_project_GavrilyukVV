@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-
+const { Sequelize } = require('sequelize');
 class AuthController
 {
     async index(req, res, next)
@@ -55,7 +55,7 @@ class AuthController
     {
         const privateKey = fs.readFileSync(process.cwd() + '/core/keys/private.key');
         //24*60*60
-        const token = jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: 60, subject:"access" });
+        const token = jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: 24*60*60*1000, subject:"access" });
         return {token};
     }
 

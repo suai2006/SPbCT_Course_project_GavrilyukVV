@@ -22,7 +22,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 registryRouter(app, logger);
 
 app.use(function(req, res, next) {
-  next(createError(404));
+  let err = new Error('Страница не найдена');
+  err.status = 404;
+  err.stack = "Запрашиваемая страница не найдена";
+  next(err);
 });
 
 app.use(function(err, req, res, next) 
@@ -34,8 +37,7 @@ app.use(function(err, req, res, next)
     {
       res.send({error: {message: err.message, stack: err.stack}});
     }
-    else res.render('error');
-  
+    else res.render('error');  
 });
 
 var port = process.env.PORT || '3000'
