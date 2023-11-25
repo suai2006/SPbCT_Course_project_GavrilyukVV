@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="ui grid">
-				<div class="row">
+		<div class="row">
 			<div class="ui grid">
 				<!-- BEGIN NAVBAR -->
 				<!-- computer only navbar -->
@@ -79,8 +79,8 @@
 							</div>
 							<a class="item" href="/"><i class="home icon"></i> Информация о системе</a>
 							<a class="item" href="/stat"><i class="table icon"></i> Статистика</a>
-              <a class="item" href="/objectmap"><i class="home icon"></i> Карта объекта</a>
-							<a href="login.html" class="item"><i class="sign out alternate icon"></i> Logout</a>
+              				<a class="item" href="/objectmap"><i class="home icon"></i> Карта объекта</a>
+							<a href="/auth/logout" class="item"><i class="sign out alternate icon"></i> Выход</a>
 							<div class="item" id="hidemobiletabletsidebar">
 								<button class="fluid ui button">
 									Close
@@ -100,7 +100,7 @@
 							</div>
 							<a class="item" href="/"><i class="home icon"></i> Иноформация о системе</a>
 							<a class="item" href="/stat"><i class="table icon"></i> Статистика</a>
-              <a class="item" href="/objectmap"><i class="home icon"></i> Карта объекта</a>
+             				 <a class="item" href="/objectmap"><i class="home icon"></i> Карта объекта</a>
 							<a class="item"></a>
 						</div>
 					</div>
@@ -109,8 +109,18 @@
 				<!-- END SIDEBAR -->
 			</div>
 		</div>		
-    {% block body %}{% endblock %}
+    	{% block body %}{% endblock %}
 	</div>    
   </body>
+	<script>
+		document.querySelectorAll('.vertical.menu a.item[href="'+ window.location.pathname +'"]').forEach((node)=>
+		{
+			node.className += " active selected";
+		})
+	</script>
+	<script src="vendors/jquery/jquery.min.js"></script>
+	<script src="vendors/fomantic-ui/semantic.min.js"></script>
+	<script src="js/main.js"></script>
    {% block endbody %}{% endblock %}
+	
 </html>
