@@ -21,7 +21,7 @@
         </form>
     </div>
   </body>
-  {# <script>
+  <script>
     authForm.onsubmit = async (event) =>
     {
       event.preventDefault();
@@ -31,17 +31,21 @@
       for (var [key, value] of formData) {
           data[key] = value;
       }
-      
-      
-      const response = await fetch("/auth/login", 
+      const request = await fetch("/auth/login", 
       {
           method: "POST",
           headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
+            "X-Requested-With" : "XHR"
           },
           body: JSON.stringify(data)
       });
-      console.log(await response.json());
+      let response = await request.json();
+      if(response.message == 'success')
+      {
+        window.location.replace('/');
+      }
+      console.log(response);
     }
-  </script> #}
+  </script>
 </html>

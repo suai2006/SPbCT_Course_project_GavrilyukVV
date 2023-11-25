@@ -1,7 +1,17 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{message}}</h1>
-  <h2>{{error.status}}</h2>
-  <pre>{{error.stack}}</pre>
+<div class="right floated thirteen wide computer sixteen wide phone column" id="content">
+  <div class="ui container grid">
+    <div class="row">
+      <div class="fifteen wide computer sixteen wide phone centered column">
+        <h2><i class="home icon"></i> {{message}}</h2>
+        <div class="ui divider"></div>
+        <h2>{{error.status}}</h2>
+        <pre>{{error.stack}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+  
 {% endblock %}

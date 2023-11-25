@@ -27,14 +27,19 @@ app.use(function(req, res, next) {
 
 app.use(function(err, req, res, next) 
 {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  res.status(err.status || 500);
-  res.render('error');
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.status(err.status || 500);
+    if(req.headers['x-requested-with'] == 'XHR')
+    {
+      res.send({error: {message: err.message, stack: err.stack}});
+    }
+    else res.render('error');
+  
 });
 
 var port = process.env.PORT || '3000'
-http.createServer(app).listen(port,"127.0.0.1", () => 
+http.createServer(app).listen(port,"0.0.0.0", () => 
 {
     logger.log(`listening at ${port}`);
 });

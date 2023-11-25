@@ -8,7 +8,7 @@ class AppController
         } 
         catch (error) 
         {
-            
+            next(error);
         }
     }
     async stat(req, res, next)
@@ -19,7 +19,7 @@ class AppController
         } 
         catch (error) 
         {
-            this.logger.log(error);
+            next(error);
         }
     }
 
@@ -31,7 +31,7 @@ class AppController
         } 
         catch (error) 
         {
-            this.logger.log(error);
+            next(error);
         }
     
     }
@@ -44,7 +44,7 @@ class AppController
         } 
         catch (error) 
         {
-            this.logger.log(error);
+            next(error);
         }
     }
 }

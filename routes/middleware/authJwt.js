@@ -22,7 +22,7 @@ module.exports = (logger) =>
                 if (err) 
                 {
                     logger.log(`method : ${req.method} URL: ${req.originalUrl} status: 401`);
-                    logger.error(`method : ${req.method} URL: ${req.originalUrl} message: ${err.message}`);
+                    logger.log(`method : ${req.method} URL: ${req.originalUrl} message: ${err.message}`);
                     if(req.xhr)
                     {
                         return res.status(401).send({message: "Unauthorized"});

@@ -23,11 +23,17 @@ class AuthController
             const {token} = this.createToken({ user: login, ip });
             res.cookie('jwt', token, { maxAge: 24*60*60*1000, httpOnly: true });
             this.logger.log('cookie token created successfully');
-            res.redirect('/');
+            if(req.headers['x-requested-with']=='XHR')
+            {
+                return res.status(200).send({message: "success"});
+            }
+            else res.redirect('/');
+            
         } 
         catch (error) 
         {
-            this.logger.log(error);
+            this.logger.error(error);
+            next(error);
         }
     }
 
@@ -40,7 +46,8 @@ class AuthController
         } 
         catch (error) 
         {
-            this.logger.log(error);
+            this.logger.error(error);
+            next(error);
         }
     }
 
