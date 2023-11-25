@@ -1,11 +1,9 @@
-const express = require('express');
-const {check} = require('express-validator');
-const router = express.Router();
-const сontroller = require('./appController')
-
-/* GET home page. */
-router.get('/', сontroller.index);
-router.use('/stat', сontroller.stat);
-router.use('/objectmap', сontroller.objectmap);
-
-module.exports = router;
+const  authRouter = require(`./auth`);
+const  appRouter = require(`./app`);
+const  apiRouter = require(`./api`);
+module.exports = function(app, logger) 
+{
+    authRouter(app, logger);
+    appRouter(app, logger);
+    apiRouter(app, logger);
+}

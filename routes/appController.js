@@ -19,7 +19,7 @@ class AppController
         } 
         catch (error) 
         {
-            console.log(error);
+            this.logger.log(error);
         }
     }
 
@@ -31,7 +31,7 @@ class AppController
         } 
         catch (error) 
         {
-            console.log(error);
+            this.logger.log(error);
         }
     
     }
@@ -44,7 +44,7 @@ class AppController
         } 
         catch (error) 
         {
-            console.log(error);
+            this.logger.log(error);
         }
     }
 }

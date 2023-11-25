@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+
 class AuthController
 {
     async index(req, res, next)
@@ -8,23 +11,22 @@ class AuthController
         } 
         catch (error) 
         {
-            console.log(error);
+            this.logger.log(error);
         }
     }
     async login(req, res, next)
     {
         try 
         {
-            console.log(555)
-            var randomNumber=Math.random().toString();
-            randomNumber=randomNumber.substring(2,randomNumber.length);
-            res.cookie('jwt',randomNumber, { maxAge: 900000, httpOnly: true });
-            console.log('cookie created successfully');
+            let {login, password} = req.body;
+            const {token} = this.createToken({ user: login });
+            res.cookie('jwt', token, { maxAge: 24*60*60, httpOnly: true });
+            this.logger.log('cookie token created successfully');
             res.redirect('/');
         } 
         catch (error) 
         {
-            console.log(error);
+            this.logger.log(error);
         }
     }
 
@@ -37,8 +39,22 @@ class AuthController
         } 
         catch (error) 
         {
-            console.log(error);
+            this.logger.log(error);
         }
+    }
+
+    createToken(payload) 
+    {
+        const privateKey = fs.readFileSync(process.cwd() + '/core/keys/private.key');
+        const token = jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: 24*60*60, subject:"access" });
+        return {token};
+    }
+
+    badRequest(req, res, logger)
+    {
+        logger.log(`method : ${req.method} URL: ${req.originalUrl} status 400`);
+        logger.error(`method : ${req.method} URL: ${req.originalUrl} message: Bad Request`);
+        res.status(400).json({"message": "Bad Request"});
     }
 }
 

@@ -1,16 +1,5 @@
 class ApiController
 {
-    async verify()
-    {
-        try 
-        {
-            
-        } 
-        catch (error) 
-        {
-            
-        }
-    }
     async index(req, res, next)
     {
         try 
