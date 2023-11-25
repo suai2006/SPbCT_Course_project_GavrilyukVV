@@ -10,9 +10,7 @@ module.exports = (logger) =>
         {
             if(req.xhr)
             {
-                return res.status(401).send({
-                    message: "Unauthorized",
-                });
+                return res.status(401).send({message: "Unauthorized"});
             }
             res.redirect('/auth');
         }
@@ -26,12 +24,11 @@ module.exports = (logger) =>
                     logger.error(`method : ${req.method} URL: ${req.originalUrl} message: ${err.message}`);
                     if(req.xhr)
                     {
-                        return res.status(401).send({
-                            message: "Unauthorized",
-                        });
+                        return res.status(401).send({message: "Unauthorized"});
                     }
                     else
                     {
+                        res.clearCookie('jwt');
                         res.redirect('/auth');
                         return;
                     }                    
