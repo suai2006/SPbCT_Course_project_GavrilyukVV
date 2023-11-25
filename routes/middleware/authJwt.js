@@ -17,6 +17,7 @@ module.exports = (logger) =>
         else 
         {
             const cert = fs.readFileSync(process.cwd() + '/core/keys/public.pem');
+            var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
             jwt.verify(sessionToken, cert, (err, decoded) => {
                 if (err) 
                 {
@@ -34,6 +35,12 @@ module.exports = (logger) =>
                     }                    
                 }
 
+                if(ip !== decoded.ip)
+                {
+                    res.clearCookie('jwt');
+                    res.redirect('/auth');
+                    return;
+                }
                 logger.log(`method : ${req.method} URL: ${req.originalUrl} status: 200`);                
                 next();
             });

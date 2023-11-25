@@ -2,7 +2,7 @@ const express = require('express');
 const {check} = require('express-validator');
 const router = express.Router();
 const middleware = require('./middleware');
-const сontroller = require('./appController');
+const сontroller = require('../controller/appController');
 
 module.exports = function(app, logger) 
 {

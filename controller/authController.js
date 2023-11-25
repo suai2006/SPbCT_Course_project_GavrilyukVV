@@ -19,7 +19,8 @@ class AuthController
         try 
         {
             let {login, password} = req.body;
-            const {token} = this.createToken({ user: login });
+            var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+            const {token} = this.createToken({ user: login, ip });
             res.cookie('jwt', token, { maxAge: 24*60*60*1000, httpOnly: true });
             this.logger.log('cookie token created successfully');
             res.redirect('/');

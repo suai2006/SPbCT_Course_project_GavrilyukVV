@@ -1,7 +1,7 @@
 const express = require('express');
 const {check} = require('express-validator');
 const router = express.Router();
-const сontroller = require('./authController');
+const сontroller = require('../controller/authController');
 
 module.exports = function(app, logger) 
 {

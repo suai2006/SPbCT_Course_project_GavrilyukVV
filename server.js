@@ -1,4 +1,4 @@
-var createError = require('http-errors');
+var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -33,4 +33,8 @@ app.use(function(err, req, res, next)
   res.render('error');
 });
 
-module.exports = app;
+var port = process.env.PORT || '3000'
+http.createServer(app).listen(port,"127.0.0.1", () => 
+{
+    logger.log(`listening at ${port}`);
+});

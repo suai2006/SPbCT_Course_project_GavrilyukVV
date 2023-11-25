@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const middleware = require('./middleware');
-const сontroller = require('./apiController')
+const сontroller = require('../controller/apiController')
 module.exports = function(app, logger) 
 {
     let authJwt = middleware.authJwt(logger);
