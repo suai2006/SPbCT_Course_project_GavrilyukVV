@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/css/loginpage.css' />
+  </head>
+  <body>
+    <div class="wrapper">
+        <form id="authForm" class="login" action="/auth/login" method="post">
+            <p class="title">Авторизация</p>
+            <input type="text" name="login" placeholder="Логин"  autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" autofocus/>
+            <i class="fa fa-user"></i>
+            <input type="password" name="password" placeholder="Пароль" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"/>
+            <i class="fa fa-key"></i>
+            <a href="#">Забыли пароль?</a>
+            <button>
+                <i class="spinner"></i>
+                <span class="state">Аторизоваться</span>
+            </button>
+        </form>
+    </div>
+  </body>
+  {# <script>
+    authForm.onsubmit = async (event) =>
+    {
+      event.preventDefault();
+      event.stopPropagation();
+      var formData = new FormData(authForm);
+      let data = {};
+      for (var [key, value] of formData) {
+          data[key] = value;
+      }
+      
+      
+      const response = await fetch("/auth/login", 
+      {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data)
+      });
+      console.log(await response.json());
+    }
+  </script> #}
+</html>

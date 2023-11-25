@@ -1,0 +1,53 @@
+{% extends 'layout.twig' %}
+{% block head %}
+<link rel='stylesheet' href='/stylesheets/style.css' />
+{% endblock %}
+{% block body %}
+  <!-- BEGIN CONTEN -->
+		<div class="right floated thirteen wide computer sixteen wide phone column" id="content">
+			<div class="ui container grid">
+				<div class="row">
+					<div class="fifteen wide computer sixteen wide phone centered column">
+						<h2><i class="home icon"></i> Информация о системе</h2>
+						<div class="ui divider"></div>
+						<div class="ui grid">
+
+							<div class="eight wide computer sixteen wide phone column justifed">
+								<h4>Пример диаграммы № 1</h4>
+								<div class="ui divider"></div>
+								<div class="ui tall stacked segment">
+									<a class="ui blue ribbon label">Chart.js Bar Chart - Multi Axis</a>
+									<canvas id="example-multiaxis"></canvas>
+									<div class="ui divider"></div>
+									<button id="rand-multi-axis" class="ui blue button simplelable">Randomize Data</button>
+								</div>
+							</div>
+							<div class="eight wide computer sixteen wide phone column justifed">
+								<h4>Пример диаграммы № 2</h4>
+								<div class="ui divider"></div>
+								<div class="ui tall stacked segment">
+									<a class="ui blue ribbon label">Chart.js Pie Chart - Examples</a>
+									<canvas id="example-pie"></canvas>
+									<div class="ui divider"></div>
+									<button id="rand-pie" class="ui blue button simplelable">Randomize Data</button>
+								</div><br>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END CONTENT -->  
+{% endblock %}
+{% block endbody %}
+<!-- inject:js -->
+<script src="vendors/jquery/jquery.min.js"></script>
+<script src="vendors/fomantic-ui/semantic.min.js"></script>
+<script src="js/main.js"></script>
+<!-- endinject -->
+<!-- chartjs:js -->
+<script src="vendors/chart.js/Chart.min.js"></script>
+<script src="vendors/chart.js/Chart.utils.js"></script>
+<script src="vendors/chart.js/Chart.example.js"></script>
+<!-- endinject -->
+{% endblock %}
