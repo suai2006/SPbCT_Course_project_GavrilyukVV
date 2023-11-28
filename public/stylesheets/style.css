@@ -48,4 +48,23 @@ a {
   margin: 30px auto;
   box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,.7);
 }
+.navbar .logo img
+{
+  margin: 30px auto;
+  display: block;
+}
 
+.device
+{
+  cursor:pointer;
+  transition: 0.5s;
+}
+.device:hover
+{
+  fill: #cbc9c9!important;
+}
+
+.device.alert
+{
+  
+}

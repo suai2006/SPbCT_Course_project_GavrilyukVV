@@ -63,6 +63,7 @@
                         id="g306"
                         transform="translate(1.1722017,1.1722017)">
                         <rect
+                        class="device"
                         style="display:inline;opacity:1;mix-blend-mode:normal;fill:#e6e6e6;stroke-width:7.5"
                         id="bit2"
                         width="1500.4182"
@@ -71,6 +72,7 @@
                         y="-5005.3013"
                         transform="matrix(0.1,0,0,0.1,0,953.00003)" />
                         <rect
+                        class="device"
                         style="display:inline;opacity:1;fill:#e6e6e6;fill-opacity:1;stroke-width:7.5"
                         id="bit3"
                         width="1523.8622"
@@ -79,6 +81,7 @@
                         y="-5708.6221"
                         transform="matrix(0.1,0,0,0.1,0,953.00003)" />
                         <rect
+                        class="device"
                         style="display:inline;opacity:1;fill:#e6e6e6;stroke-width:7.5"
                         id="bit4"
                         width="1488.6962"
@@ -87,11 +90,13 @@
                         y="-8404.6865"
                         transform="matrix(0.1,0,0,0.1,0,953.00003)" />
                         <path
+                        class="device"
                         id="bit5"
                         style="fill:#e6e6e6;fill-opacity:1;stroke-width:0.75"
                         d="m 416.09363,145.88144 h 113.55544 v 57.19215 H 416.09363 Z m -19.89289,-34.81262 h 135.1061 v 69.62523 h -135.1061 z"
                         transform="translate(-1.1722017,-1.1722017)" />
                         <path
+                        class="device"
                         id="bit1"
                         style="opacity:1;fill:#e6e6e6;stroke-width:0.75"
                         d="M 354.00492,378.36286 H 532.7657 v 55.09349 H 354.00492 Z m -100.22323,-0.58612 h 109.01476 v 82.05412 H 253.78169 Z" />
@@ -104,4 +109,15 @@
 </div>
 <!-- END CONTENT -->  
 {% endblock %}
-{% block endbody %}{% endblock %}
+{% block endbody %}
+<script>
+    let devices = document.querySelectorAll('.device');
+    for(let item of devices)
+    {
+       item.onclick = (e) => 
+       {
+        $('.tiny.modal').modal('show');
+       };
+    }
+</script>
+{% endblock %}
