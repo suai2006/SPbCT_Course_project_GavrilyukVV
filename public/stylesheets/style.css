@@ -36,10 +36,6 @@ a {
 .ui.ui.ui.inverted.pointing.menu .active.item:after {
   background-color: #1e77bb !important;
 }
-.navbar .logo
-{
-  
-}
 .navbar .logo .pic{
   height: 150px;
   width: 150px;
@@ -62,9 +58,4 @@ a {
 .device:hover
 {
   fill: #cbc9c9!important;
-}
-
-.device.alert
-{
-  
 }
