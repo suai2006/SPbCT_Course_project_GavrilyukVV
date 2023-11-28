@@ -17,13 +17,15 @@ a {
 {
   flex-grow: 1;
   padding: 50px;
+  overflow: auto;
 }
 .navbar
 {
-  width: 250px;
+  width: 280px;
   background: #2185d0;
   display:flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 .navbar nav
 {
