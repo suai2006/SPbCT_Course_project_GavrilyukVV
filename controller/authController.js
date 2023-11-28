@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const { Sequelize } = require('sequelize');
+// const { Sequelize } = require('sequelize');
 class AuthController
 {
     async index(req, res, next)
