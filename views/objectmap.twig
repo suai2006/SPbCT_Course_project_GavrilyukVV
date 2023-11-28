@@ -112,11 +112,48 @@
 {% block endbody %}
 <script>
     let devices = document.querySelectorAll('.device');
+    let modalWrap = null;
+    function showModal()
+    {
+        modalWrap = document.createElement('div');
+        modalWrap.innerHTML = `
+            <div id="dynamicModal" class="ui tiny test modal">
+                <div class="header">Информация о помещении</div>
+                <div class="content">
+                    <p>Название помещения:</p>
+                    <p>Установленные датчики:</p>
+                    <p>Дата последнего срабатывания:</p>
+                </div>
+                <div class="actions">
+                    <div class="ui labeled icon primary approve button"><i class="checkmark icon"></i>Закрыть</div>
+                </div>
+            </div>            
+        `;
+        document.body.appendChild(modalWrap);
+        $('.ui.modal').modal({
+            onHidden : () => 
+            {
+                let dynamicModal = document.querySelector('#dynamicModal');
+                document.body.removeChild(modalWrap);
+                document.body.removeChild(dynamicModal.parentNode);
+                modalWrap = null;
+            }
+        }).modal('show');
+    }
     for(let item of devices)
     {
        item.onclick = (e) => 
        {
-        $('.tiny.modal').modal('show');
+            /*const request = await fetch("/objectmap/getModal", 
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With" : "XHR"
+                },
+                body: JSON.stringify(data);
+            });*/
+            showModal();
        };
     }
 </script>

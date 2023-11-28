@@ -7,7 +7,12 @@
     <meta name="robots" content="all,follow">
     <title>Система управления &mdash; {{title}}</title>
     <link rel="icon" href="images/maintop.png" sizes="32x32">
-  	<link rel="stylesheet" href="https://semantic-ui.com/dist/semantic.min.css">
+  	<link rel="stylesheet" href="/vendors/Semantic-UI/semantic.min.css">
+	<script
+		src="https://code.jquery.com/jquery-3.1.1.min.js"
+		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		crossorigin="anonymous"></script>
+	<script src="/vendors/Semantic-UI/semantic.min.js"></script>
   	<link rel="stylesheet" href="css/main.css">
     {% block head %}{% endblock %}
   </head>
@@ -52,8 +57,6 @@
 			node.className += " active selected";
 		})
 	</script>
-	<script src="vendors/jquery/jquery.min.js"></script>
-	<script src="vendors/fomantic-ui/semantic.min.js"></script>
 	<script src="js/main.js"></script> 
    {% block endbody %}{% endblock %}
 	
