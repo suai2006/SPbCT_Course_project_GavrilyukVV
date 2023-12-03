@@ -1,22 +1,35 @@
 {
-  "name": "public-html",
-  "version": "0.0.0",
+  "name": "vue_ssr",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./server.js"
+    "serve": "vue-cli-service serve && nodemon server/index.js",
+    "start": "npm run build && cross-env NODE_ENV=production node server/index.js",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "express-validator": "^7.0.1",
-    "http-errors": "~1.6.3",
-    "jsonwebtoken": "^9.0.2",
-    "morgan": "~1.9.1",
-    "nodemon": "^3.0.1",
-    "request-ip": "^3.3.0",
-    "serialport": "^10.5.0",
-    "twig": "~0.10.3"
-  }
+    "@fortawesome/fontawesome-free": "^6.5.0",
+    "axios": "^1.6.2",
+    "core-js": "^3.8.3",
+    "express": "^4.18.2",
+    "register-service-worker": "^1.7.2",
+    "semantic-ui-css": "^2.5.0",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-pwa": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "cross-env": "^7.0.3",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
