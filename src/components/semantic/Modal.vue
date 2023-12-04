@@ -11,7 +11,9 @@
                 </slot>            
             </div>            
             <div class="actions">
-                <slot name="actions"/>                
+                <slot name="actions">
+                    <div class="ui black deny button" @click="dialog=false">Закрыть</div>
+                </slot>                
             </div>
         </div>        
     </div>

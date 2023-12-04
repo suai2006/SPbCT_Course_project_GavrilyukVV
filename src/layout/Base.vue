@@ -12,7 +12,7 @@
         </nav>
         <button class="ui blue button" @click="$emit('logout')"><i class="sign-out icon"></i>Выход</button>
       </div>      
-      <div class="content">
+      <div class="ui main container">
           <router-view/>
       </div>        
     </div>    

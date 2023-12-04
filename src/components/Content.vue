@@ -1,11 +1,12 @@
 <template>  
-  <div class="right floated column" id="content">
+  <div class="right floated column content" id="content">
     <div class="ui container grid">
       <div class="row">
         <div class="fifteen wide computer sixteen wide phone centered column">
           <h2 class="ui dividing header"><i class="home icon"></i>{{title}}</h2>
           <div class="ui container">
-            <slot/>           
+            <slot/>    
+            <slot name="bottom"></slot>
           </div>          
         </div>
       </div>
