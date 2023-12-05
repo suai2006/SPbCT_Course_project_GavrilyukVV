@@ -1,36 +1,7 @@
 <template>
     <Content :title="title">
         <Flat>  
-            <path
-                ref="zone1"
-                class="watch_point"
-                id="zone1"
-                @click="zoneClick"
-                d="M 253,378 h 278 v 55 h -170 v 26 h -108 v -81.2" />  
-            <path
-                ref="zone2"
-                class="watch_point"
-                id="zone2"
-                @click="zoneClick"
-                d="M 380,450 h 152 v 214 h -152 v -214"/>
-            <path
-                ref="zone3"
-                class="watch_point"
-                id="zone3"
-                @click="zoneClick"
-                d="M 552,382 h 154 v 282 h -154 v -282" />
-            <path
-                ref="zone4"
-                class="watch_point"
-                id="zone4"
-                @click="zoneClick"
-                d="M 552,112 h 145 v 250 h -145 v -250" />
-            <path
-                ref="zone5"
-                class="watch_point"
-                id="zone5"
-                @click="zoneClick"
-                d="M 396,112 h 135 v 90 h -113.5 v -22 h -22 v -68" />
+            <path v-for="item in items" :key="item.id" :ref="item.id" class="watch_point" :id="item.id" @click="item.handler" :d="item.draw" />
         </Flat>
         <modal :dialog="dialog">
             <template #header>
@@ -63,7 +34,11 @@
                 dialog: false,
                 items:
                 [
-                    {ref:"zone1"}
+                    {id:"zone1", handler : this.zoneClick, draw:"M 253,378 h 278 v 55 h -170 v 26 h -108 v -81.2"},
+                    {id:"zone2", handler : this.zoneClick, draw:"M 380,450 h 152 v 214 h -152 v -214"},
+                    {id:"zone3", handler : this.zoneClick, draw:"M 552,382 h 154 v 282 h -154 v -282"},
+                    {id:"zone4", handler : this.zoneClick, draw:"M 552,112 h 145 v 250 h -145 v -250"},
+                    {id:"zone5", handler : this.zoneClick, draw:"M 396,112 h 135 v 90 h -113.5 v -22 h -22 v -68"},
                 ]
             };
             return obj;
