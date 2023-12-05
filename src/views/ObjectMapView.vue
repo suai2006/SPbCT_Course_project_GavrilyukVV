@@ -69,7 +69,7 @@
     }
     .watch_point
     {
-        fill:#e1e1e9;
+        fill:rgb(33 133 208 / 10%);
         fill-opacity:1;
         stroke-width:0.75;
         stroke: black;
@@ -78,6 +78,6 @@
     }
     .watch_point:hover
     {
-        fill: #cbc9c9!important;
+        fill: rgb(33 133 208 / 30%)!important;
     }
 </style>
