@@ -34,11 +34,11 @@
                 dialog: false,
                 items:
                 [
-                    {id:"zone1", handler : this.zoneClick, draw:"M 253,378 h 278 v 55 h -170 v 26 h -108 v -81.2"},
-                    {id:"zone2", handler : this.zoneClick, draw:"M 380,450 h 152 v 214 h -152 v -214"},
-                    {id:"zone3", handler : this.zoneClick, draw:"M 552,382 h 154 v 282 h -154 v -282"},
-                    {id:"zone4", handler : this.zoneClick, draw:"M 552,112 h 145 v 250 h -145 v -250"},
-                    {id:"zone5", handler : this.zoneClick, draw:"M 396,112 h 135 v 90 h -113.5 v -22 h -22 v -68"},
+                    {id:"zone1", handler : this.zoneClick, draw:"M 236 286 L 232 371 L 346 373 L 347 344 L 516 347 L 516 289 Z"},
+                    {id:"zone2", handler : this.zoneClick, draw:"M 362 361 L 516 361 L 513 578 L 351 576 L 362 361 Z"},
+                    {id:"zone3", handler : this.zoneClick, draw:"M 534 289 L 690 290 L 699 579 L 527 579 L 534 289 Z"},
+                    {id:"zone4", handler : this.zoneClick, draw:"M 531 20.907 L 683 22 L 693 274 L 535 273 L 531 20 Z"},
+                    {id:"zone5", handler : this.zoneClick, draw:"M 377 21.858 L 516 19 L 517 128 L 483 128 L 485 218 L 517 218 L 517 270 L 450 269 L 454 116 L 396 115 L 397 89 L 374 89 L 377 21 Z"}
                 ]
             };
             return obj;
