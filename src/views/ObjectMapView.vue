@@ -34,11 +34,11 @@
                 dialog: false,
                 items:
                 [
-                    {id:"zone1", handler : this.zoneClick, draw:"M 236 286 L 232 371 L 346 373 L 347 344 L 516 347 L 516 289 Z"},
-                    {id:"zone2", handler : this.zoneClick, draw:"M 362 361 L 516 361 L 513 578 L 351 576 L 362 361 Z"},
-                    {id:"zone3", handler : this.zoneClick, draw:"M 534 289 L 690 290 L 699 579 L 527 579 L 534 289 Z"},
-                    {id:"zone4", handler : this.zoneClick, draw:"M 531 20.907 L 683 22 L 693 274 L 535 273 L 531 20 Z"},
-                    {id:"zone5", handler : this.zoneClick, draw:"M 377 21.858 L 516 19 L 517 128 L 483 128 L 485 218 L 517 218 L 517 270 L 450 269 L 454 116 L 396 115 L 397 89 L 374 89 L 377 21 Z"}
+                    {id:"zone1", handler : this.zoneClick, draw:"M 23.629 399.782 L 22.991 496.854 L 118.785 494.299 L 118.785 504.518 L 232.461 506.433 L 231.823 366.573 L 137.305 365.935 L 137.944 399.782 L 23.629 399.782 Z"},
+                    {id:"zone2", handler : this.zoneClick, draw:"M 23.629 30.654 L 22.991 281.636 L 91.963 281.636 L 91.963 275.249 L 199.252 273.972 L 199.252 256.729 L 222.882 256.73 L 222.243 31.293 L 23.629 30.654 Z"},
+                    {id:"zone3", handler : this.zoneClick, draw:"M 228.629 31.293 L 228.629 263.115 L 406.807 263.754 L 406.807 30.654 L 228.629 31.293 Z"},
+                    {id:"zone4", handler : this.zoneClick, draw:"M 434.268 21.713 L 434.268 83.022 L 478.334 83.022 L 478.334 91.963 L 474.502 91.963 L 474.502 109.206 L 414.47 109.206 L 413.832 263.115 L 655.234 263.115 L 655.234 109.844 L 524.315 109.845 L 524.315 93.24 L 521.761 93.24 L 521.76 83.022 L 586.901 83.66 L 586.262 21.075 L 434.268 21.713 Z"},
+                    {id:"zone5", handler : this.zoneClick, draw:"M 479.611 269.502 L 480.25 339.751 L 410.639 339.751 L 411.278 441.293 L 655.234 441.932 L 653.957 270.14 L 479.611 269.502 Z"}
                 ]
             };
             return obj;
@@ -69,10 +69,10 @@
     }
     .watch_point
     {
-        fill:rgb(33 133 208 / 10%);
+        fill:rgb(33 133 208 / 8%);
         fill-opacity:1;
         stroke-width:0.75;
-        stroke: black;
+        stroke: transparent;
         cursor:pointer;
         transition: 0.5s;
     }
