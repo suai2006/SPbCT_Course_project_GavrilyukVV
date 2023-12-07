@@ -1,12 +1,12 @@
 <template>  
   <Content :title="title">
     <h3 class="first">Text Container</h3>
-    <div class="chart-container" style="position: relative; height:350px; width:350px;display: inline-block;vertical-align: top;">
-        <Pie id="pie-chart-id" :options="pieOptions" :data="chartData" />
-    </div>    
     <div class="chart-container" style="position: relative; height:400px; width:609px;display: inline-block;vertical-align: top;">
         <Bar id="bar-chart-id" :options="barOptions" :data="chartData"/>
-    </div>    
+    </div>
+    <div class="chart-container" style="position: relative; height:350px; width:350px;display: inline-block;vertical-align: top;">
+        <Pie id="pie-chart-id" :options="pieOptions" :data="chartData" />
+    </div>   
   </Content>
 </template>
 <script>  
@@ -52,7 +52,8 @@
         },
         barOptions: 
         {
-            responsive: true
+            responsive: true,
+            legend: {position: false}
         },
       };
       return obj;
