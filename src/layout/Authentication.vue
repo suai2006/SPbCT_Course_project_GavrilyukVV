@@ -3,14 +3,14 @@
         <div class="wrapper">
             <form id="authForm" class="login">
                 <p class="title">Авторизация</p>
-                <input type="text" name="login" placeholder="Логин" v-focus autocomplete="off" @focus="$event.srcElement.removeAttribute('readonly')" readonly/>
-                <i class="fa fa-user"></i>
-                
-                <input type="password" name="password" ref="password" placeholder="Пароль" autocomplete="off" @focus="$event.srcElement.removeAttribute('readonly')" readonly/>
+                <input type="text" name="username" v-model="username" placeholder="Логин" v-focus autocomplete="off" @focus="$event.srcElement.removeAttribute('readonly')" readonly/>
+                <i class="fa fa-user"></i>                
+                <input type="password" name="password" v-model="password" ref="password" placeholder="Пароль" autocomplete="off" @focus="$event.srcElement.removeAttribute('readonly')" readonly/>
                 <i class="fa fa-key"></i>
                 <a href="#">Забыли пароль?</a>
-                <button type="button" @click="$emit('sigin')">
-                    <!-- <i class="spinner"></i> -->
+                <button :class="btnClass" :disabled="isdisabled" type="button" @click="sign()">
+                    <i class="spinner"></i>
+                    <i class="sign in alternate icon"></i>
                     <span class="state">Аторизоваться</span>
                 </button> 
             </form>
@@ -18,4 +18,57 @@
     </div>     
 </template>
 <style scoped src="@/assets/css/Authentication.css"></style>
+<script>
+const axios = require('axios');
+export default 
+{
+    data()
+    {
+        return {
+            btnClass:"ui primary button",
+            username:"",
+            password:"",
+        }
+    },
+    computed:
+    {
+        isdisabled()
+        {
+            return (this.username == "" || this.password == "") ? true : false; 
+        }
+    },
+    methods:
+    {
+        async sign ()
+        {
+            try 
+            {
+               this.btnClass = "ui primary loading disabled button";
+                let data = JSON.stringify({
+                    "login": this.username,
+                    "password": this.password
+                });
+                
+                let config = 
+                {
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:3000/api/auth/login',
+                    headers: { 
+                        'Content-Type': 'application/json'                    
+                    },
+                    data : data
+                };
+                let response = await axios.request(config);
+                this.$emit('sigin', response.data);
+            } 
+            catch (error) 
+            {
+                this.btnClass = "ui primary button";
+                console.log(error);
+            }   
+        }
+    }
+}
+</script>
   

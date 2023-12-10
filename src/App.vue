@@ -14,30 +14,38 @@
       {
           let data = 
           {
-            userToken: false
+            //userToken: false
           }
           return data;
       },
-      computed: {},      
+      computed: 
+      {
+        userToken()
+        {
+          return this.$cookies.isKey("jwt");
+        }
+      },      
       beforeMount()
       {
-        if (localStorage.userToken) 
-        {
-          //БУдут добавлены куки, что избавит от необходимости делать предварительный запрос
-          //будет сделано computed свойство
-          this.userToken = localStorage.userToken;
-        }
-        else
-        {
-          if(this.$route.name !== 'home') this.$router.push({name: 'home'})
-        }
+        if(!this.$cookies.isKey("jwt") && this.$route.name !== 'home') this.$router.push({name: 'home'})
+        // if (localStorage.userToken) 
+        // {
+        //   //БУдут добавлены куки, что избавит от необходимости делать предварительный запрос
+        //   //будет сделано computed свойство 
+        //   this.userToken = localStorage.userToken;
+        // }
+        // else
+        // {
+        //   if(this.$route.name !== 'home') this.$router.push({name: 'home'})
+        // }
       },
       methods: 
       {
-          onSigin(formData) 
+          onSigin(response) 
           {
-              localStorage.userToken = true;
-              this.userToken = localStorage.userToken;
+              this.$cookies.set("jwt", response.access_token);
+              // localStorage.userToken = true;
+              // this.userToken = localStorage.userToken;
           },
           logout() 
           {
