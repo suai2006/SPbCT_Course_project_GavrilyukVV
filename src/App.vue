@@ -14,45 +14,46 @@
       {
           let data = 
           {
-            //userToken: false
+            userToken: false,            
           }
           return data;
       },
-      computed: 
-      {
-        userToken()
-        {
-          return this.$cookies.isKey("jwt");
-        }
-      },      
-      beforeMount()
-      {
-        if(!this.$cookies.isKey("jwt") && this.$route.name !== 'home') this.$router.push({name: 'home'})
-        // if (localStorage.userToken) 
-        // {
-        //   //БУдут добавлены куки, что избавит от необходимости делать предварительный запрос
-        //   //будет сделано computed свойство 
-        //   this.userToken = localStorage.userToken;
-        // }
-        // else
-        // {
-        //   if(this.$route.name !== 'home') this.$router.push({name: 'home'})
-        // }
-      },
+      
+      created() {},   
+      beforeMount(){},
       methods: 
       {
-          onSigin(response) 
+          authCheck()
           {
-              this.$cookies.set("jwt", response.access_token);
-              // localStorage.userToken = true;
-              // this.userToken = localStorage.userToken;
+              if(this.$cookies.isKey("access_token")) this.userToken = true;
+              else
+              {
+                this.userToken = false;
+                if(this.$route.name !== 'home')  this.$router.push({name: 'home'});
+              }
+          },
+          onSigin(response)
+          {
+              this.$cookies.set("access_token", response.access_token);
+              this.userToken = true;
           },
           logout() 
           {
-            localStorage.removeItem("userToken");
+            this.$cookies.remove("access_token");
             this.userToken = false;
             if(this.$route.name !== 'home') this.$router.push({name: 'home'})
           }
+      },
+      watch:
+      {
+        '$route.name':
+        {
+          handler: function() {
+            this.authCheck();
+          },
+          deep: true,
+          immediate: true
+        }
       }
   }
 </script>
