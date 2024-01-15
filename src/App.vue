@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="appClick">
     <Base v-if="userToken" v-on:logout="logout"/>
     <Authentication v-else v-on:sigin="onSigin"/>
   </div>
@@ -19,7 +19,9 @@
           return data;
       },
       
-      created() {},   
+      created() {
+        console.log(window);
+      },   
       beforeMount(){},
       methods: 
       {
@@ -35,13 +37,24 @@
           onSigin(response)
           {
               this.$cookies.set("access_token", response.access_token);
-              this.userToken = true;
+              this.userToken = true;              
           },
           logout() 
           {
             this.$cookies.remove("access_token");
             this.userToken = false;
             if(this.$route.name !== 'home') this.$router.push({name: 'home'})
+          },
+          appClick(event)
+          {
+            if(this.userToken && !this.$cookies.isKey("access_token"))
+            {
+              event.preventDefault();
+              this.userToken = false;
+              if(this.$route.name !== 'home') this.$router.push({name: 'home'});
+              event.stopPropagation();
+              return;
+            }
           }
       },
       watch:

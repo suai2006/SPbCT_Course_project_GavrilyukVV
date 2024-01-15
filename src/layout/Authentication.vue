@@ -3,16 +3,15 @@
         <div class="wrapper">
             <form id="authForm" class="login">
                 <p class="title">Авторизация</p>
-                <input type="text" name="username" v-model="username" placeholder="Логин" v-focus autocomplete="off" @focus="$event.srcElement.removeAttribute('readonly')" readonly/>
+                <input type="text" name="username" v-model="username" placeholder="Логин" v-focus autocomplete="off" @focus="onFocus" readonly/>
                 <i class="fa fa-user"></i>                
-                <input type="password" name="password" v-model="password" ref="password" placeholder="Пароль" autocomplete="off" @focus="$event.srcElement.removeAttribute('readonly')" readonly/>
+                <input type="text" class="password" name="password" v-model="password" ref="password" placeholder="Пароль" autocomplete="off" @focus="onFocus" readonly/>
                 <i class="fa fa-key"></i>
                 <a href="#">Забыли пароль?</a>
                 <button :class="btnClass" :disabled="isdisabled" type="button" @click="sign()">
-                    <i class="spinner"></i>
                     <i class="sign in alternate icon"></i>
                     <span class="state">Аторизоваться</span>
-                </button> 
+                </button>
             </form>
         </div>  
     </div>     
@@ -39,6 +38,10 @@ export default
     },
     methods:
     {
+        onFocus(event)
+        {
+            event.target.removeAttribute('readonly');
+        },
         async sign ()
         {
             try 

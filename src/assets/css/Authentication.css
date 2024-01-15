@@ -56,6 +56,10 @@ html, body, #app
     border-radius: 2px;
     color: #ccc;
 }
+.login input.password
+{
+    -webkit-text-security: square;
+}
 .login input + i.fa {
     color: #fff;
     font-size: 1em;
