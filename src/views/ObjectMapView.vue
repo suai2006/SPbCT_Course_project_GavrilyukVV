@@ -8,7 +8,7 @@
                 Тестовый заголовок
             </template>
             <div class="description">
-                A description can appear on the right
+                Какойто текст который в последствии будет изменен.
             </div>
             <template #actions>
                 <div class="ui black deny button" @click="confirm">Закрыть</div>
@@ -27,20 +27,13 @@
     {
         name: 'about',
         components: {Flat, modal},
-        setup()
-        {
-            //if(window.error_interval_id) clearInterval(window.error_interval_id);
-            // const interval_id = window.setInterval(function(){}, Number.MAX_SAFE_INTEGER);
-            // for (let i = 1; i < interval_id; i++) {
-            //     window.clearInterval(i);
-            // }
-        },
+        setup(){},
         data()
         {
             let obj = {
                 title : "Карта объекта",
                 dialog: false,
-                error_interval_id: false,
+                alert_interval_ids: [],
                 items:
                 {
                     zone1:{id:"zone1", handler : this.zoneClick, draw:"M 23.629 399.782 L 22.991 496.854 L 118.785 494.299 L 118.785 504.518 L 232.461 506.433 L 231.823 366.573 L 137.305 365.935 L 137.944 399.782 L 23.629 399.782 Z"},
@@ -56,11 +49,14 @@
         beforeCreate(){},
         beforeDestroy()
         {
-            clearInterval(this.error_interval_id);
+            for(let interval of this.alert_interval_ids)
+            {
+                clearInterval(interval);
+            }            
         },
         mounted()
         {
-            document.title = this.title;    
+            document.title = this.title;       
             this.blink('zone4');             
         },
         computed:{},      
@@ -78,10 +74,11 @@
             {
                 if(this.$refs[zone] && this.$refs[zone].length)
                 {
-                    this.error_interval_id = setInterval(() => 
+                    let interval = setInterval(() => 
                     {
                         this.$refs[zone][0].classList.toggle("alert");                        
                     }, 500);
+                    this.alert_interval_ids.push(interval);
                 } 
             }
         }     

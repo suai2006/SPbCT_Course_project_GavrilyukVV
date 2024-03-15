@@ -16,13 +16,13 @@ const config = require("../env.config");
 const Logger = require('./core/logger');
 logger = new Logger(config, 'api');
 const app = express()
-const host = process.env.HOST || '127.0.0.1'
-const port = process.env.PORT || 3000
+const host = config.HOST || '127.0.0.1'
+const port = config.PORT || 3000
 
 app.set('port', port)
 
 registryAPI(app, logger);
-if (process.env.NODE_ENV === 'production') 
+if (config.NODE_ENV === 'production') 
 {
   app.use(express.static('dist'))
   app.get('*', (req, res, next) => {
@@ -31,5 +31,5 @@ if (process.env.NODE_ENV === 'production')
 }
 
 app.listen(port, host, () => {
-  logger.log('Server listening on ' + host + ':' + port) // eslint-disable-line no-console
+  logger.log('Server listening on ' + host + ':' + port)
 })

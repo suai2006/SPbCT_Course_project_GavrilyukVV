@@ -35,45 +35,25 @@
                 <tr>
                     <td>Включить систему мониторинга за датчиками</td>
                     <td class="right aligned collapsing">
-                        <div class="inline field">
-                            <div ref="checkboxWrap1" class="ui toggle checkbox">
-                                <input ref="checkbox1" type="checkbox" tabindex="0" class="hidden">
-                                <label></label>
-                            </div>
-                        </div>
+                        <Checkbox :checked="checked1"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Отправлять уведомления от системы в телеграмм</td>
                     <td class="right aligned">
-                        <div class="inline field">
-                            <div ref="checkboxWrap2" class="ui toggle checkbox">
-                                <input ref="checkbox2" type="checkbox" tabindex="0" class="hidden">
-                                <label></label>
-                            </div>
-                        </div>
+                        <Checkbox :checked="checked2"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Отправлять уведомления от системы на электронную почту</td>
                     <td class="right aligned">
-                        <div class="inline field">
-                            <div ref="checkboxWrap3" class="ui toggle checkbox">
-                                <input ref="checkbox3" type="checkbox" tabindex="0" class="hidden">
-                                <label></label>
-                            </div>
-                        </div>
+                        <Checkbox :checked="checked3"/>
                     </td>
                 </tr>
                 <tr class="disabled">
                     <td>Отправлять уведомления о срабатываний системы в 112</td>
                     <td class="right aligned">
-                        <div class="inline field">
-                            <div ref="checkboxWrap4" class="ui toggle checkbox">
-                                <input ref="checkbox4" type="checkbox" tabindex="0" class="hidden">
-                                <label></label>
-                            </div>
-                        </div>
+                        <Checkbox :checked="checked4"/>
                     </td>
                 </tr>
             </tbody>
@@ -81,18 +61,19 @@
     </Content>
 </template>
 <script>
+    import Checkbox from '@/components/semantic/Checkbox.vue'; 
     export default 
     {
         name: 'settings',
-        components: {},
+        components: {Checkbox},
         data()
         {
             let obj = 
             {
                 title : "Настройки",
-                checked1:false,
+                checked1:true,
                 checked2:false,
-                checked3:false,
+                checked3:true,
                 checked4:false,
             };
             return obj;
@@ -101,36 +82,10 @@
         mounted()
         {
             document.title = this.title;
-            this.$refs.checkboxWrap1.onclick = () => this.checked1 = !this.checked1
-            this.$refs.checkboxWrap2.onclick = () => this.checked2 = !this.checked2
-            this.$refs.checkboxWrap3.onclick = () => this.checked3 = !this.checked3
-            this.$refs.checkboxWrap4.onclick = () => this.checked4 = !this.checked4
         },
         computed: {},      
         methods: {},
-        watch:
-        {
-            checked1()
-            {
-                this.$refs.checkboxWrap1.classList.toggle("checked");
-                this.$refs.checkbox1.checked = this.$refs.checkbox1.checked ? false : true;
-            },
-            checked2()
-            {
-                this.$refs.checkboxWrap2.classList.toggle("checked");
-                this.$refs.checkbox2.checked = this.$refs.checkbox2.checked ? false : true;
-            },
-            checked3()
-            {
-                this.$refs.checkboxWrap3.classList.toggle("checked");
-                this.$refs.checkbox3.checked = this.$refs.checkbox3.checked ? false : true;
-            },
-            checked4()
-            {
-                this.$refs.checkboxWrap4.classList.toggle("checked");
-                this.$refs.checkbox4.checked = this.$refs.checkbox4.checked ? false : true;
-            },
-        }
+        watch:{}
     }
 </script>
 <style scoped>

@@ -7,6 +7,17 @@ class AuthController
     {
         try 
         {
+            Object.defineProperty(сontroller, 'logger', {
+                value: null,
+                writable: true,
+                enumerable:false
+            });
+
+            this.logger = {
+                log:(msg) => {console.log(msg)},
+                error:(error) =>{console.log(error)},
+            }
+
             return res.status(200).send({});
         } 
         catch (error) 
@@ -20,16 +31,20 @@ class AuthController
         try 
         {
             let {login, password} = JSON.parse(req.rawBody);
+            if(!login || !password) throw new Error('Ошибка авторизации');
+            if(login!=='admin' || password!=='admin') throw new Error('Ошибка авторизации');
+            
             var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-            const {token} = this.createToken({ user: login, ip });
-            //res.cookie('jwt', token, { maxAge: 24*60*60*1000, httpOnly: true });
+            //!!ToDo Сделать проверку данных в базе.
+            const {token} = this.createToken({ user: login, ip });            
             this.logger.log('cookie token created successfully');
             return res.status(200).send({access_token: token});
         } 
         catch (error) 
         {
             this.logger.error(error);
-            next(error);
+            return res.status(200).send({error:error.message});
+            //next(error);
         }
     }
 

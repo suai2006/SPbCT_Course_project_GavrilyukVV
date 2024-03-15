@@ -7,7 +7,7 @@
                 <i class="fa fa-user"></i>                
                 <input type="text" class="password" name="password" v-model="password" ref="password" placeholder="Пароль" autocomplete="off" @focus="onFocus" readonly/>
                 <i class="fa fa-key"></i>
-                <a href="#">Забыли пароль?</a>
+                <!--a href="#">Забыли пароль?</a-->
                 <button :class="btnClass" :disabled="isdisabled" type="button" @click="sign()">
                     <i class="sign in alternate icon"></i>
                     <span class="state">Аторизоваться</span>
@@ -46,7 +46,7 @@ export default
         {
             try 
             {
-               this.btnClass = "ui primary loading disabled button";
+                this.btnClass = "ui primary loading disabled button";
                 let data = JSON.stringify({
                     "login": this.username,
                     "password": this.password
