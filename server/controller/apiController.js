@@ -1,4 +1,5 @@
-class ApiController
+const BaseController = require("./BaseController");
+class ApiController extends BaseController
 {
     async index(req, res, next)
     {
@@ -15,11 +16,15 @@ class ApiController
     {
         try 
         {
-            res.render('stat', { title: 'Статистика' });
+            this.logger.log('Получаем список инцедентов');
+            let rows = await this.query("SELECT * FROM mydb.info");
+            this.logger.log('Список инцедентов получен'); 
+            return res.status(200).send({incedents:rows});
         } 
         catch (error) 
         {
-            console.log(error);
+            this.logger.log(error); 
+            res.status(500).send(error);
         }
     }
 

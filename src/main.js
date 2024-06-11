@@ -8,7 +8,7 @@ import 'semantic-ui-css/semantic.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 import Content from '@/components/Content.vue';
-Vue.use(VueCookies,{ expires: "60s"});
+Vue.use(VueCookies,{ expires: "3600s"});
 Vue.directive('focus', {
     inserted: function (el) {
         el.focus()

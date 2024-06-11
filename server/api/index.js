@@ -1,26 +1,23 @@
 const  authRouter = require(`./auth`);
-///const  apiRouter = require(`./api`);
+const  mainRouter = require(`./main`);
+const  notificationRouter = require(`./notification`);
+const  settingsRouter = require(`./settings`);
+const mysql = require('mysql2');
+
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password:"754575",
+    database: 'mydb',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+
 module.exports = function(app, logger) 
 {
-    app.use('/api/*', function (req, res, next) 
-    {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE');
-        res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
-        next();
-    });
-    app.use('/api/*',function(req, res, next) 
-    {
-        var data = '';
-        req.setEncoding('utf8');
-        req.on('data', function(chunk) { 
-            data += chunk;
-        });
-        req.on('end', function() {
-            req.rawBody = data;
-            next();
-        });
-    });
-    authRouter(app, logger);
-    //apiRouter(app, logger);
+    authRouter(app, logger, pool);
+    notificationRouter(app, logger, pool);
+    settingsRouter(app, logger, pool);
+    mainRouter(app, logger, pool);
 }

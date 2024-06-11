@@ -10,8 +10,7 @@ module.exports = function(app, logger)
         writable: false,
         enumerable:false
     });
-    //router.get('/',  сontroller.index.bind(сontroller));
+    
     router.post('/login', сontroller.login.bind(сontroller));
-    //router.use('/logout', сontroller.logout.bind(сontroller));
     app.use("/api/auth", router);
 }

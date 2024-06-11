@@ -1,5 +1,6 @@
 <template>
     <div class="loginPage">
+        <ErrorMessage :onError="onError" :error="error"/>
         <div class="wrapper">
             <form id="authForm" class="login">
                 <p class="title">Авторизация</p>
@@ -18,15 +19,23 @@
 </template>
 <style scoped src="@/assets/css/Authentication.css"></style>
 <script>
+import ErrorMessage from '@/components/semantic/ErrorMessage.vue';   
 const axios = require('axios');
 export default 
 {
+    components: {ErrorMessage},
     data()
     {
         return {
             btnClass:"ui primary button",
             username:"",
             password:"",
+            onError:false,
+            error:{
+                header:"",
+                message:"",
+            },
+            title : "Авторизация"
         }
     },
     computed:
@@ -35,6 +44,10 @@ export default
         {
             return (this.username == "" || this.password == "") ? true : false; 
         }
+    },
+    mounted()
+    {
+        document.title = this.title;
     },
     methods:
     {
@@ -63,15 +76,20 @@ export default
                     data : data
                 };
                 let response = await axios.request(config);
+                console.log(response.data);
                 this.$emit('sigin', response.data);
             } 
             catch (error) 
             {
                 this.btnClass = "ui primary button";
-                console.log(error);
+                this.error.message = error.message;
+                this.error.header = error.response.data.error;
+                this.onError = true;
+                setTimeout(() => {
+                    this.onError = false;
+                }, 1500);
             }   
         }
     }
 }
 </script>
-  

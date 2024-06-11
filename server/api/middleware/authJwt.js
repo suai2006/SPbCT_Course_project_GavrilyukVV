@@ -5,7 +5,8 @@ module.exports = (logger) =>
 {
     let verifyToken = (req, res, next) => 
     {
-        const sessionToken = req.cookies['jwt'];
+        const sessionToken = req.rawHeaders.find(f=>f.indexOf("access_token")>=0).split("=")[1];
+        
         if (!sessionToken) 
         {
             if(req.xhr)
@@ -16,7 +17,7 @@ module.exports = (logger) =>
         }
         else 
         {
-            const cert = fs.readFileSync(process.cwd() + '/core/keys/public.pem');
+            const cert = fs.readFileSync(process.cwd() + '/server/core/keys/public.pem');
             var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
             jwt.verify(sessionToken, cert, (err, decoded) => {
                 if (err) 
@@ -40,7 +41,8 @@ module.exports = (logger) =>
                     res.clearCookie('jwt');
                     res.redirect('/auth');
                     return;
-                }                                
+                } 
+                                               
                 next();
             });
         }

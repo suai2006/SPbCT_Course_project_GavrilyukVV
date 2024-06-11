@@ -18,17 +18,17 @@ const routes = [
   {
     path: '/objectmap',
     name: 'objectmap',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ObjectMapView.vue')
+    component: () => import(/* webpackChunkName: "objectmap" */ '../views/ObjectMapView.vue')
   },
   {
     path: '/settings',
     name: 'settings',
-    component: () => import(/* webpackChunkName: "about" */ '../views/SettingsView.vue')
+    component: () => import(/* webpackChunkName: "settings" */ '../views/SettingsView.vue')
   },
   { 
     path: '/:pathMatch(.*)*', 
     name: '404',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PageNotFound.vue') 
+    component: () => import(/* webpackChunkName: "404" */ '../views/PageNotFound.vue') 
   },
 ]
 

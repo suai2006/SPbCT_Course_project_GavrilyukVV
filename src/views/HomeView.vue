@@ -17,8 +17,7 @@
   {
     name: 'home',
     components: { Pie, Bar },
-    props: 
-    {},
+    props: {},
     data()
     {
       let obj = 

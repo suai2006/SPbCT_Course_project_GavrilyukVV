@@ -5,17 +5,13 @@
         </Flat>
         <modal :dialog="dialog">
             <template #header>
-                Тестовый заголовок
+                Информация по объекту
             </template>
             <div class="description">
                 Какойто текст который в последствии будет изменен.
             </div>
             <template #actions>
                 <div class="ui black deny button" @click="confirm">Закрыть</div>
-                <div class="ui positive right labeled icon button" @click="confirm">
-                    Yep, that's me
-                    <i class="checkmark icon"></i>
-                </div>
             </template>
         </modal>
     </Content>
@@ -57,7 +53,7 @@
         mounted()
         {
             document.title = this.title;       
-            this.blink('zone4');             
+            //this.blink('zone4');             
         },
         computed:{},      
         methods: 

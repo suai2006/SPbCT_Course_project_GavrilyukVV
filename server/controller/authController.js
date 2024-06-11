@@ -7,17 +7,6 @@ class AuthController
     {
         try 
         {
-            Object.defineProperty(сontroller, 'logger', {
-                value: null,
-                writable: true,
-                enumerable:false
-            });
-
-            this.logger = {
-                log:(msg) => {console.log(msg)},
-                error:(error) =>{console.log(error)},
-            }
-
             return res.status(200).send({});
         } 
         catch (error) 
@@ -30,7 +19,9 @@ class AuthController
     {
         try 
         {
-            let {login, password} = JSON.parse(req.rawBody);
+            
+            let {login, password} = req.body;
+            
             if(!login || !password) throw new Error('Ошибка авторизации');
             if(login!=='admin' || password!=='admin') throw new Error('Ошибка авторизации');
             
@@ -43,7 +34,7 @@ class AuthController
         catch (error) 
         {
             this.logger.error(error);
-            return res.status(200).send({error:error.message});
+            return res.status(401).send({error:error.message});
             //next(error);
         }
     }

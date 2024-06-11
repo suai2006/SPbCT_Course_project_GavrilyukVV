@@ -1,151 +1,21 @@
 <template>
   <Content :title="title">
-    <h3 class="first">Text Container</h3>
+    <h3 class="first">Информация по полученным инцедентам</h3>
     <table class="ui celled padded table">
         <thead>
           <tr>
-            <th class="single line">Evidence Rating</th>
-            <th>Effect</th>
-            <th>Efficacy</th>
-            <th>Consensus</th>
-            <th>Comments</th>
+            <th class="single line">Помещение</th>            
+            <th>Время</th>
+            <th>Датчик</th>            
+            <th>Сообщение</th>
           </tr>
         </thead>
         <tbody>
-            <tr>
-            <td>
-                <h5 class="ui aligned header">A</h5>
-            </td>
-            <td class="single line">
-                Power Output
-            </td>
-            <td>
-                <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-            </td>
-            <td class="right aligned">
-                80% 
-            </td>
-            <td>Creatine supplementation is the reference compound for increasing muscular creatine levels; there is variability in this increase, however, with some nonresponders.</td>
-            </tr>
-            <tr>
-              <td>
-                  <h5 class="ui aligned header">A</h5>
-              </td>
-              <td class="single line">
-                  Weight
-              </td>
-              <td>
-                  <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-              </td>
-              <td class="right aligned">
-                  100% 
-              </td>
-              <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
-            </tr>
-            <tr>
-              <td>
-                  <h5 class="ui aligned header">A</h5>
-              </td>
-              <td class="single line">
-                  Weight
-              </td>
-              <td>
-                  <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-              </td>
-              <td class="right aligned">
-                  100% 
-              </td>
-              <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
-            </tr>
-            <tr>
-              <td>
-                  <h5 class="ui aligned header">A</h5>
-              </td>
-              <td class="single line">
-                  Weight
-              </td>
-              <td>
-                  <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-              </td>
-              <td class="right aligned">
-                  100% 
-              </td>
-              <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
-            </tr>
-            <tr>
-              <td>
-                  <h5 class="ui aligned header">A</h5>
-              </td>
-              <td class="single line">
-                  Weight
-              </td>
-              <td>
-                  <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-              </td>
-              <td class="right aligned">
-                  100% 
-              </td>
-              <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
-            </tr>
-            <tr>
-              <td>
-                  <h5 class="ui aligned header">A</h5>
-              </td>
-              <td class="single line">
-                  Weight
-              </td>
-              <td>
-                  <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-              </td>
-              <td class="right aligned">
-                  100% 
-              </td>
-              <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
-            </tr>
-            <tr>
-              <td>
-                  <h5 class="ui aligned header">A</h5>
-              </td>
-              <td class="single line">
-                  Weight
-              </td>
-              <td>
-                  <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-              </td>
-              <td class="right aligned">
-                  100%
-              </td>
-              <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
-            </tr>
-            <tr>
-              <td>
-                  <h5 class="ui aligned header">A</h5>
-              </td>
-              <td class="single line">
-                  Weight
-              </td>
-              <td>
-                  <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-              </td>
-              <td class="right aligned">
-                  100% 
-              </td>
-              <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
-            </tr>
-            <tr>
-              <td>
-                  <h5 class="ui aligned header">A</h5>
-              </td>
-              <td class="single line">
-                  Weight
-              </td>
-              <td>
-                  <div class="ui star rating" data-rating="3" data-max-rating="3"></div>
-              </td>
-              <td class="right aligned">
-                  100%
-              </td>
-              <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
+            <tr v-for="item in incedentList" :key="item.id" :ref="item.id">
+              <td><div class="ui star rating" data-rating="3" data-max-rating="3">{{item.room}}</div></td>
+              <td><div class="ui star rating" data-rating="3" data-max-rating="3">{{item.datetime}}</div></td>
+              <td><div class="ui star rating" data-rating="3" data-max-rating="3"></div>{{item.name}}</td>
+              <td><div class="ui star rating" data-rating="3" data-max-rating="3">{{item.room}}</div></td>              
             </tr>
         </tbody>
         <tfoot>
@@ -173,16 +43,23 @@
     data()
     {
       let obj = {
-        title : "This is an about page"
+        title : "Оперативная информация"
       };
       return obj;
     },
     beforeMount(){},
     mounted()
     {
-      document.title = this.title;
+        document.title = this.title;
+        console.log(this.incedentList);
     },
-    computed: {},      
+    computed: 
+    {
+        incedentList()
+        {
+            return this.$store.state.incedentList;
+        },            
+    }, 
     methods: {}     
   }
 </script>

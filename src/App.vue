@@ -7,6 +7,8 @@
 <script>
   import Base from '@/layout/Base.vue';
   import Authentication from '@/layout/Authentication.vue';
+  const axios = require('axios');
+  import { mapState, mapMutations } from 'vuex'
   export default 
   {
       components: {Base, Authentication},
@@ -19,43 +21,45 @@
           return data;
       },
       
-      created() {
-        console.log(window);
-      },   
-      beforeMount(){},
+      created() {},   
+      beforeMount()
+      {
+        
+      },
       methods: 
       {
-          authCheck()
-          {
-              if(this.$cookies.isKey("access_token")) this.userToken = true;
-              else
-              {
-                this.userToken = false;
-                if(this.$route.name !== 'home')  this.$router.push({name: 'home'});
-              }
-          },
-          onSigin(response)
-          {
-              this.$cookies.set("access_token", response.access_token);
-              this.userToken = true;              
-          },
-          logout() 
-          {
-            this.$cookies.remove("access_token");
-            this.userToken = false;
-            if(this.$route.name !== 'home') this.$router.push({name: 'home'})
-          },
-          appClick(event)
-          {
-            if(this.userToken && !this.$cookies.isKey("access_token"))
+        ...mapMutations(['addSettingsList']),
+        authCheck()
+        {
+            if(this.$cookies.isKey("access_token")) this.userToken = true;
+            else
             {
-              event.preventDefault();
               this.userToken = false;
-              if(this.$route.name !== 'home') this.$router.push({name: 'home'});
-              event.stopPropagation();
-              return;
+              if(this.$route.name !== 'home')  this.$router.push({name: 'home'});
             }
+        },
+        onSigin(response)
+        {
+            this.$cookies.set("access_token", response.access_token);
+            this.userToken = true;              
+        },
+        logout() 
+        {
+          this.$cookies.remove("access_token");
+          this.userToken = false;
+          if(this.$route.name !== 'home') this.$router.push({name: 'home'})
+        },
+        appClick(event)
+        {
+          if(this.userToken && !this.$cookies.isKey("access_token"))
+          {
+            event.preventDefault();
+            this.userToken = false;
+            if(this.$route.name !== 'home') this.$router.push({name: 'home'});
+            event.stopPropagation();
+            return;
           }
+        },       
       },
       watch:
       {

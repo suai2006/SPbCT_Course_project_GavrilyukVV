@@ -9,19 +9,11 @@
             <tbody>
                 <tr>
                     <td>Изменить логин</td>
-                    <td class="right aligned collapsing">
-                        <button class="ui blue compact icon button">
-                            <i class="edit icon"></i> Изменить
-                        </button>
-                    </td>
+                    <ChangeAuthDataButton field="login"/>
                 </tr>
                 <tr>
                     <td>Изменить пароль</td>
-                    <td class="right aligned">
-                        <button class="ui blue compact icon button">
-                            <i class="edit icon"></i> Изменить
-                        </button>
-                    </td>
+                    <ChangeAuthDataButton field="password"/>
                 </tr>                
             </tbody>
         </table>
@@ -32,28 +24,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Включить систему мониторинга за датчиками</td>
+                <tr v-for="item in settingsList" :key="item.id" :ref="item.id" :class="isDisabled(item)">
+                    <td>{{item.name}}</td>
                     <td class="right aligned collapsing">
-                        <Checkbox :checked="checked1"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Отправлять уведомления от системы в телеграмм</td>
-                    <td class="right aligned">
-                        <Checkbox :checked="checked2"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Отправлять уведомления от системы на электронную почту</td>
-                    <td class="right aligned">
-                        <Checkbox :checked="checked3"/>
-                    </td>
-                </tr>
-                <tr class="disabled">
-                    <td>Отправлять уведомления о срабатываний системы в 112</td>
-                    <td class="right aligned">
-                        <Checkbox :checked="checked4"/>
+                        <Checkbox :checked="item.value"/>
                     </td>
                 </tr>
             </tbody>
@@ -62,19 +36,16 @@
 </template>
 <script>
     import Checkbox from '@/components/semantic/Checkbox.vue'; 
+    import ChangeAuthDataButton from '@/components/semantic/ChangeAuthDataButton.vue'; 
     export default 
     {
         name: 'settings',
-        components: {Checkbox},
+        components: {Checkbox, ChangeAuthDataButton},
         data()
         {
             let obj = 
             {
-                title : "Настройки",
-                checked1:true,
-                checked2:false,
-                checked3:true,
-                checked4:false,
+                title : "Настройки"
             };
             return obj;
         },
@@ -83,8 +54,20 @@
         {
             document.title = this.title;
         },
-        computed: {},      
-        methods: {},
+        computed: 
+        {
+            settingsList()
+            {
+                return this.$store.state.settingsList;
+            },            
+        },      
+        methods: 
+        {
+            isDisabled(item)
+            {
+                return item.enable == true ? '' : 'disabled';
+            }
+        },
         watch:{}
     }
 </script>
