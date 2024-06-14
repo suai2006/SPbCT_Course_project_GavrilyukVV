@@ -36,7 +36,7 @@ class BaseController
                 from: config.EMAIL.from,                    
                 to: config.EMAIL.to,
                 subject: config.EMAIL.subject,
-                html: "Сработал датчик, сообщение пока не сформировано должным образом"               
+                html: message               
             };
 
             this.emailTransporter.verify((err, success) =>
