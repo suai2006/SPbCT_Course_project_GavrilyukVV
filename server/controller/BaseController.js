@@ -72,9 +72,9 @@ class BaseController
                     const stringSession = new StringSession(secret);
                     this.telegramClient = new TelegramClient(stringSession, apiId, apiHash, option);     
                     this.logger.log(`Создание Тг-клиента успешно завершилось`);
-                    await client.start();
+                    await this.telegramClient.start();
                 }
-                await client.sendMessage(chat_id, { message: "Сработал датчик, сообщение пока не сформировано должным образом" });
+                await this.telegramClient.sendMessage(chat_id, { message: "Сработал датчик, сообщение пока не сформировано должным образом" });
                 this.logger.log(`сообщение отправлено`);
                 resolve();
             } 
