@@ -22,11 +22,10 @@ class AuthController
             
             let {login, password} = req.body;
             
-            if(!login || !password) throw new Error('Ошибка авторизации');
-            if(login!=='admin' || password!=='admin') throw new Error('Ошибка авторизации');
+            if(login!=='admin') throw new Error('Ошибка аутентификации');
+            if(password!=='admin') throw new Error('Ошибка авторизации');
             
-            var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-            //!!ToDo Сделать проверку данных в базе.
+            var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;           
             const {token} = this.createToken({ user: login, ip });            
             this.logger.log('cookie token created successfully');
             return res.status(200).send({access_token: token});

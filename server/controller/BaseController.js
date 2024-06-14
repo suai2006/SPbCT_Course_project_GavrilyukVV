@@ -19,9 +19,10 @@ class BaseController
     sendNotificationForUser(incedentList)
     {
         if(!incedentList.length) return;
-        return new Promise((resolve, reject) => 
+        return new Promise(async (resolve, reject) => 
         {
-            
+            await this.sendTelegramm(`**Получен сигнал тревоги** \n${incedentList[0][1]}`);
+            this.logger.log('отправлено оповещение в в месснджер телеграмм');
             resolve();
         });
     }
@@ -75,7 +76,7 @@ class BaseController
                 {
                     const apiId = config.telegramm.app_api_id;
                     const apiHash = config.telegramm.app_api_hash;
-                    const secret = config.telegramm.app_api_secret;                
+                    const secret = config.telegramm.app_bot_secret;                
                     const option = {
                         connectionRetries: 5,
                     };
@@ -84,8 +85,8 @@ class BaseController
                     this.logger.log(`Создание Тг-клиента успешно завершилось`);
                     await this.telegramClient.start();
                 }
-                await this.telegramClient.sendMessage(chat_id, { message });
-                this.logger.log(`сообщение отправлено`);
+                await this.telegramClient.sendMessage(chat_id, { message, parseMode : "markdown" });
+                this.logger.log(`отправлено оповещение в месснджер телеграмм`);
                 resolve();
             } 
             catch (error) 

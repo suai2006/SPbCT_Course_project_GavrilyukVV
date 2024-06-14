@@ -17,7 +17,7 @@ const config = require("../env.config");
 const Logger = require('./core/logger');
 logger = new Logger(config, 'api');
 const app = express()
-const host = config.HOST || '127.0.0.1'
+const host = config.HOST || '0.0.0.0'
 const port = config.PORT || 3000
 app.use(express.json());
 app.use(bodyParser.raw({type: function(){return true;}, limit: '200mb'}));
@@ -62,4 +62,4 @@ if (process.env.NODE_ENV === 'production')
 
 app.listen(port, host, () => {
   logger.log('Server listening on http://' + host + ':' + port)
-})
+});

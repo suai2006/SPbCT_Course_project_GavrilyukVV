@@ -17,23 +17,34 @@ class NotificationController extends BaseController
                 {
                     let msg = `Сработал ${row.device} в помещении ${row.room}`;
                     this.logger.log(msg);
-                    incedentList.push([isoDateTime, msg, row.id, ]);                    
+                    incedentList.push([isoDateTime, msg, row.id ]);                    
                 }
             }
-            let values = incedentList.map(c => 
-                {
-                    let out = `'${c[0]}', '${c[1]}', ${c[2]}`;
-                    return out;
-                }).map(c => `(${c})`).join(",");
-            let insert = "INSERT INTO `mydb`.`operative` (`datetime`,`message`,`Devices_id`) VALUES" + values;
-            let insertQuery = await this.query(insert);
-            console.log(insertQuery);
-            this.logger.log('получен сигнал');
+            if(incedentList.length)
+            {
+                let values = incedentList.map(c => 
+                    {
+                        let out = `'${c[0]}', '${c[1]}', ${c[2]}`;
+                        return out;
+                    }).map(c => `(${c})`).join(",");
+                let insert = "INSERT INTO `mydb`.`operative` (`datetime`,`message`,`Devices_id`) VALUES" + values;
+                await this.query(insert);
+                this.sendNotificationForUser(incedentList).then(() => {
+                    this.logger.log('метод sendNotificationForUser завершил работу.');
+                });
+                this.logger.log('сообщение об инцеденте записано');
+            } 
+            else
+            {
+
+            }
+            
             return res.status(200).send({succsess:true});
         } 
         catch (error) 
         {
             this.logger.log(error);
+            return res.status(500).send({error:error.message});
         }
     }
 }

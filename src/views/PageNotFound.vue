@@ -7,20 +7,7 @@
     export default 
     {
         name: 'error404',
-        components: {},
-        data()
-        {
-        let obj = {
-            title : "Ошибка 404"
-        };
-        return obj;
-        },
-        beforeMount(){},
-        mounted()
-        {
-            document.title = this.title;
-        },
-        computed: {},      
-        methods: {}     
+        data(){ return {title : "Ошибка 404"}} ,
+        mounted(){document.title = this.title;},
     }
 </script>

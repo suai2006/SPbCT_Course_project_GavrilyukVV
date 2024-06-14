@@ -19,11 +19,9 @@
 </template>
 <style scoped src="@/assets/css/Authentication.css"></style>
 <script>
-import ErrorMessage from '@/components/semantic/ErrorMessage.vue';   
 const axios = require('axios');
 export default 
 {
-    components: {ErrorMessage},
     data()
     {
         return {
@@ -76,8 +74,7 @@ export default
                     data : data
                 };
                 let response = await axios.request(config);
-                console.log(response.data);
-                this.$emit('sigin', response.data);
+                this.$emit('signin', response.data);
             } 
             catch (error) 
             {

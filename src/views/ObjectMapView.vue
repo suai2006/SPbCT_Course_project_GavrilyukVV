@@ -3,17 +3,7 @@
         <Flat>  
             <path v-for="item in Object.values(items)" :key="item.id" :ref="item.id" class="watch_point" :id="item.id" @click="item.handler" :d="item.draw" />
         </Flat>
-        <modal :dialog="dialog">
-            <template #header>
-                Информация по объекту
-            </template>
-            <div class="description">
-                Какойто текст который в последствии будет изменен.
-            </div>
-            <template #actions>
-                <div class="ui black deny button" @click="confirm">Закрыть</div>
-            </template>
-        </modal>
+        <modal v-if="showDialog" :dialog="openDialog" :data="data" @close="confirm"/>
     </Content>
 </template>
 <script>
@@ -28,7 +18,12 @@
         {
             let obj = {
                 title : "Карта объекта",
-                dialog: false,
+                showDialog: false,
+                openDialog: false,
+                data:{
+                    header:"Просмотр информации",
+                    info:"Пока так",
+                },
                 alert_interval_ids: [],
                 items:
                 {
@@ -55,16 +50,20 @@
             document.title = this.title;       
             //this.blink('zone4');             
         },
-        computed:{},      
+        computed:{
+
+        },      
         methods: 
         {
             zoneClick(event)
             {
-                this.dialog = true;
+                this.showDialog = true;
+                setTimeout(() => this.openDialog = true, 0);               
             },
             confirm () 
             {
-                this.dialog = false;
+                this.openDialog = false;
+                setTimeout(() =>  this.showDialog = false, 250)                
             },
             blink(zone)
             {

@@ -1,23 +1,29 @@
 import axios from "axios";
 //import {SweetAlert} from "./SweetAlert";
-export class RPCRequest {
-    static async request(url, method='get', data={}, options={})
+export default class RPCRequest 
+{
+    static async request( method='get', url, data={}, options={})
     {
         let res = null
-        try {
-            let r = await axios.request({
-                url,
-                method,
-                data,
-                ...options,
-            })
-            if(r?.data?.result?.message){
-                res = r.data.result.message
-            } else {
-                this.error(url, r?.data?.error?.message ?? 'Неизвестная ошибка', r?.data?.error?.code)
-            }
-        } catch (e) {
-            this.error(url, e.message, e.code)
+        try 
+        {
+            let config = 
+            {
+                method: method,
+                maxBodyLength: Infinity,
+                url: url,
+                headers: { 
+                    'Content-Type': 'application/json'                    
+                },
+                ...options
+            };
+            if(data) config.data = data;
+            let response = await axios.request(config);
+            res = response.data;
+        } 
+        catch (error) 
+        {
+            console.log(error);
         }
         return res
     }
@@ -69,7 +75,7 @@ export class RPCRequest {
                     data = idOrData
                     idOrData = null
                 }
-                let res = confirm?await SweetAlert.confirm('Вы уверены?'):true
+                //let res = confirm?await SweetAlert.confirm('Вы уверены?'):true
                 return res?RPCRequest.request(`/${resource}/${idOrData}`, 'delete', data, params):null
             },
         }

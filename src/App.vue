@@ -1,7 +1,7 @@
 <template>
   <div id="app" @click="appClick">
     <Base v-if="userToken" v-on:logout="logout"/>
-    <Authentication v-else v-on:sigin="onSigin"/>
+    <Authentication v-else v-on:signin="onSignIn"/>
   </div>
 </template>
 <script>
@@ -28,17 +28,8 @@
       },
       methods: 
       {
-        ...mapMutations(['addSettingsList']),
-        authCheck()
-        {
-            if(this.$cookies.isKey("access_token")) this.userToken = true;
-            else
-            {
-              this.userToken = false;
-              if(this.$route.name !== 'home')  this.$router.push({name: 'home'});
-            }
-        },
-        onSigin(response)
+        ...mapMutations(['addSettingsList']),        
+        onSignIn(response)
         {
             this.$cookies.set("access_token", response.access_token);
             this.userToken = true;              
@@ -59,7 +50,16 @@
             event.stopPropagation();
             return;
           }
-        },       
+        },    
+        authCheck()
+        {
+            if(this.$cookies.isKey("access_token")) this.userToken = true;
+            else
+            {
+              this.userToken = false;
+              if(this.$route.name !== 'home')  this.$router.push({name: 'home'});
+            }
+        },   
       },
       watch:
       {

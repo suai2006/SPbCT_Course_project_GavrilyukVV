@@ -5,7 +5,6 @@ class SettingsController extends BaseController
     {
         try 
         {
-            
             this.logger.log('Получаем справочник настроек');
             let rows = await this.query("select * from `mydb`.`settings_list`");
             this.logger.log('Cправочник настроек получен');            
@@ -18,7 +17,7 @@ class SettingsController extends BaseController
     }
     async setSettings(req, res, next)
     {
-
+        this.logger.log('Получаем на изменение настроек');
     }
     async changeLogin(req, res, next)
     {

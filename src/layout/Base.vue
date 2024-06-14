@@ -20,65 +20,23 @@
 <style src="@/assets/css/app.css"></style>
 <style scoped src="@/assets/css/base.css"></style>
 <script>
-  const axios = require('axios');
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations, mapActions } from 'vuex'
   export default 
   {
       components: {},
       data() 
       {
-          let data = 
-          {
-                
-          }
-          return data;
-      },
-      
+          return {};
+      },      
       created() {},   
-      beforeMount()
+      async mounted()
       {
-        this.getSetiingsList();
-        this.getIncedendList();
+        await this.fetchData('fetchData')
       },
       methods: 
       {
-        ...mapMutations(['addSettingsList','addIncedentList']),        
-        async getSetiingsList() 
-        {
-          let response = await this.query('get', 'http://localhost:3000/api/settings');
-          console.log(response?.settings);
-          this.addSettingsList(response?.settings || []);
-        },
-        async getIncedendList() 
-        {
-          let response = await this.query('get', 'http://localhost:3000/api/incedent');
-          this.addIncedentList(response?.incedents || []);
-        },
-        async query(method, url, data)
-        {
-          try 
-          {
-            let config = 
-            {
-                method: method,
-                maxBodyLength: Infinity,
-                url: url,
-                headers: { 
-                    'Content-Type': 'application/json'                    
-                }
-            };
-            if(data) config.data = data;
-            let response = await axios.request(config);
-
-            return response.data;
-          } catch (error) {
-            console.log(error);
-          }
-        }
+        ...mapActions(['fetchData'])      
       },
-      watch:
-      {
-       
-      }
+      watch:{}
   }
 </script>

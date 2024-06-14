@@ -12,12 +12,14 @@ class ApiController extends BaseController
             
         }
     }
-    async stat(req, res, next)
+    async incedent(req, res, next)
     {
         try 
         {
+            // this.logger.error(new Error("Ошибка доступа")); 
+            // return res.status(401).send({error: "Ошибка доступа"});
             this.logger.log('Получаем список инцедентов');
-            let rows = await this.query("SELECT * FROM mydb.info");
+            let rows = await this.query("SELECT * FROM mydb.info WHERE id ORDER  BY datetime desc");
             this.logger.log('Список инцедентов получен'); 
             return res.status(200).send({incedents:rows});
         } 

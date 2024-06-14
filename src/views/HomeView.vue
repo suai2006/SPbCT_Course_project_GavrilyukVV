@@ -1,59 +1,28 @@
 <template>  
   <Content :title="title">
-    <h3 class="first">Text Container</h3>
-    <div class="chart-container" style="position: relative; height:400px; width:609px;display: inline-block;vertical-align: top;">
-        <Bar id="bar-chart-id" :options="barOptions" :data="chartData"/>
+    <div class="ui cards">
+      <BarChart />
+      <UserAction />      
     </div>
-    <div class="chart-container" style="position: relative; height:350px; width:350px;display: inline-block;vertical-align: top;">
-        <Pie id="pie-chart-id" :options="pieOptions" :data="chartData" />
-    </div>   
+    <LastIncedents />
+    <div class="ui cards"><LineChart /></div>      
   </Content>
 </template>
 <script>  
-  import { Pie, Bar } from 'vue-chartjs'
-  import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, BarElement, LinearScale } from 'chart.js'  
-  ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, BarElement, LinearScale);
+  import BarChart from '@/components/home/BarChart.vue';
+  import UserAction from '@/components/home/UserAction.vue';
+  import LastIncedents from '@/components/home/LastIncedents.vue';
+  import LineChart from '@/components/home/LineChart.vue';
   export default 
   {
     name: 'home',
-    components: { Pie, Bar },
+    components: { BarChart, UserAction, LastIncedents, LineChart },
     props: {},
     data()
     {
       let obj = 
       {
-        title : "Главная страница",
-        chartData: 
-        {
-          labels: [ 'ДД1', 'ДД2', 'ДД3', 'ДД4', 'ДДГ' ],
-          datasets: [ 
-            {
-              label: 'Сработки', 
-              data: [40, 20, 12, 30, 2],
-              backgroundColor: 
-              [
-                'rgb(255, 99, 132)',
-                'green',
-                'rgb(54, 162, 235)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
-              ],
-              hoverOffset: 4
-            } 
-          ]
-        },
-        pieOptions: 
-        {
-            responsive: true,
-            plugins :{
-              legend: {position: 'left'}
-            }
-        },
-        barOptions: 
-        {
-            responsive: true,
-            legend: {position: false}
-        },
+        title : "Главная страница",        
       };
       return obj;
     },

@@ -8,7 +8,7 @@ module.exports = function(app, logger, mysql)
     Object.defineProperty(сontroller, 'logger', {value: logger, ritable: false,enumerable:false});
     Object.defineProperty(сontroller, 'mysql', {value: mysql, ritable: false,enumerable:false});
     
-    router.get('/incedent', сontroller.stat.bind(сontroller));
+    router.get('/incedent', сontroller.incedent.bind(сontroller));
     //app.use("/api", authJwt.verifyToken, router);
     app.use("/api", router);
 }

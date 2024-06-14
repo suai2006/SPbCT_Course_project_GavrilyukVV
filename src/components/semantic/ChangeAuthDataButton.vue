@@ -3,7 +3,7 @@
     <button class="ui blue compact icon button" @click="changeFn">
         <i class="edit icon"></i> Изменить
     </button>
-    <modal :dialog="dialog">
+    <modal :dialog="dialog"  @close="close">
         <template #header>
             {{formTitle}}
         </template>
