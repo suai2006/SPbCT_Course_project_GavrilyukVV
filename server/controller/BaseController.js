@@ -21,6 +21,7 @@ class BaseController
         if(!incedentList.length) return;
         return new Promise((resolve, reject) => 
         {
+            
             resolve();
         });
     }
@@ -35,7 +36,7 @@ class BaseController
                 from: config.EMAIL.from,                    
                 to: config.EMAIL.to,
                 subject: config.EMAIL.subject,
-                html: message               
+                html: "Сработал датчик, сообщение пока не сформировано должным образом"               
             };
 
             this.emailTransporter.verify((err, success) =>
@@ -54,20 +55,31 @@ class BaseController
 
     sendTelegramm()
     {
-        return new Promise((resolve, reject) => 
+        return new Promise(async (resolve, reject) => 
         {
-            this.logger.log(`Начинается создание Тг-клиента`);
-            const apiId = parseInt(config.telegramm.app_api_id);
-            const apiHash = config.telegramm.app_api_hash;
-            const secret = config.telegramm.app_api_secret;
-            const stringSession = new StringSession(secret);
-
-            const client = new TelegramClient(stringSession, apiId, apiHash, {
-                connectionRetries: 5,
-            });        
-            this.logger.log(`Создание Тг-клиента успешно завершилось`);
-            
-            resolve();
+            try 
+            {
+                this.logger.log(`Начинается создание Тг-клиента`);
+                const apiId = config.telegramm.app_api_id;
+                const apiHash = config.telegramm.app_api_hash;
+                const secret = config.telegramm.app_api_secret;
+                const chat_id = config.telegramm.chat_id;
+                const option = {
+                    connectionRetries: 5,
+                };
+                const stringSession = new StringSession(secret);
+                const client = new TelegramClient(stringSession, apiId, apiHash, option);     
+                this.logger.log(`Создание Тг-клиента успешно завершилось`);
+                await client.start();
+                await client.sendMessage(chat_id, { message: "Сработал датчик, сообщение пока не сформировано должным образом" });
+                this.logger.log(`сообщение отправлено`);
+                resolve();
+            } 
+            catch (error) 
+            {
+                this.logger.error(error);
+                resolve()
+            }            
         });
     }
 
