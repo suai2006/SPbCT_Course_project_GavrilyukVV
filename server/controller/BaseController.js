@@ -60,17 +60,20 @@ class BaseController
             try 
             {
                 this.logger.log(`Начинается создание Тг-клиента`);
-                const apiId = config.telegramm.app_api_id;
-                const apiHash = config.telegramm.app_api_hash;
-                const secret = config.telegramm.app_api_secret;
                 const chat_id = config.telegramm.chat_id;
-                const option = {
-                    connectionRetries: 5,
-                };
-                const stringSession = new StringSession(secret);
-                const client = new TelegramClient(stringSession, apiId, apiHash, option);     
-                this.logger.log(`Создание Тг-клиента успешно завершилось`);
-                await client.start();
+                if(!this.telegramClient)
+                {
+                    const apiId = config.telegramm.app_api_id;
+                    const apiHash = config.telegramm.app_api_hash;
+                    const secret = config.telegramm.app_api_secret;                
+                    const option = {
+                        connectionRetries: 5,
+                    };
+                    const stringSession = new StringSession(secret);
+                    this.telegramClient = new TelegramClient(stringSession, apiId, apiHash, option);     
+                    this.logger.log(`Создание Тг-клиента успешно завершилось`);
+                    await client.start();
+                }
                 await client.sendMessage(chat_id, { message: "Сработал датчик, сообщение пока не сформировано должным образом" });
                 this.logger.log(`сообщение отправлено`);
                 resolve();
