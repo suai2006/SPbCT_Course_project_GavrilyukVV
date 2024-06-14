@@ -30,7 +30,17 @@ class BaseController
     {
         return new Promise((resolve, reject) => 
         {
-            if(!this.emailTransporter) this.emailTransporter = nodemailer.createTransport(this.mailConfig);
+            let mailConfig = 
+            {
+                host: config.EMAIL.host,
+                secure : true,
+                auth : {
+                    user: config.EMAIL.address,
+                    pass: config.EMAIL.password
+                }
+            };
+
+            if(!this.emailTransporter) this.emailTransporter = nodemailer.createTransport(mailConfig);
             
             let mailOptions = {
                 from: config.EMAIL.from,                    
