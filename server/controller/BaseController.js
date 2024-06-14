@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
-const telegram = require('telegram');
+const { TelegramClient } = require("telegram");
+const { StringSession } = require("telegram/sessions/index.js");
+const config = require("../../env.config");
+
 class BaseController
 {
     query(query)
@@ -51,7 +54,21 @@ class BaseController
 
     sendTelegramm()
     {
+        return new Promise((resolve, reject) => 
+        {
+            this.logger.log(`Начинается создание Тг-клиента`);
+            const apiId = parseInt(config.telegramm.app_api_id);
+            const apiHash = config.telegramm.app_api_hash;
+            const secret = config.telegramm.app_api_secret;
+            const stringSession = new StringSession(secret);
 
+            const client = new TelegramClient(stringSession, apiId, apiHash, {
+                connectionRetries: 5,
+            });        
+            this.logger.log(`Создание Тг-клиента успешно завершилось`);
+            
+            resolve();
+        });
     }
 
 }
