@@ -53,7 +53,7 @@ class BaseController
         });
     }
 
-    sendTelegramm()
+    sendTelegramm(message)
     {
         return new Promise(async (resolve, reject) => 
         {
@@ -74,7 +74,7 @@ class BaseController
                     this.logger.log(`Создание Тг-клиента успешно завершилось`);
                     await this.telegramClient.start();
                 }
-                await this.telegramClient.sendMessage(chat_id, { message: "Сработал датчик, сообщение пока не сформировано должным образом" });
+                await this.telegramClient.sendMessage(chat_id, { message });
                 this.logger.log(`сообщение отправлено`);
                 resolve();
             } 
