@@ -4,7 +4,12 @@ import RPCRequest from '@/assets/javascript/RPCRequest.js';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
+  state: 
+  {
+    isLoading:true,
+    userToken:false,
+    isMobile:false,
+    isDesctop:true,    
     settingsList:[],
     incedentList:[],
     shortMonth: [ "янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек" ],
@@ -22,42 +27,68 @@ export default new Vuex.Store({
   },
   getters: 
   {
-    settingsList:(state)=>
-    {
+    settingsList:(state) => {
       return state.settingsList;
     },
-    incedentList:(state)=>
-    {
+    incedentList:(state)=> {
       return state.incedentList;
-    },
-    getLastincedents:(state)=>
+    },    
+    getLastincedents :(state)=>
     {
       let arr = state.incedentList.slice(0);
       return arr.splice(0, 2);
-    }
+    },
+    
   },
   mutations: {
-    addSettingsList:(state, data) =>
-    {
+    addSettingsList:(state, data) => {
       state.settingsList = data;
     },
-    addIncedentList:(state, data) =>
-    {
+    addIncedentList:(state, data) =>{
       state.incedentList = data;
+    },
+    isMobile:(state, data) => {
+      state.isMobile = data;
+    },
+    isDesctop:(state, data) => {
+      state.isDesctop = data;
+    },
+    setUserAgent :(state)=>
+    {      
+      if(['iPhone', 'Android'].find(f => (navigator.userAgent.indexOf(f) !== -1)))
+      {
+        state.isDesctop = false;
+      }
+      else 
+      {
+        state.isDesctop = true;
+      }      
+    },
+    setSettingsList(state, data)
+    {
+      let item = state.settingsList.find(f => f.id == data.id);
+      let idx = state.settingsList.indexOf(item);
+      item.value = data.value;
+      state.settingsList.splice(idx, 1, item);      
+    },
+    setUserToken(state, data) {
+        state.userToken = data;
     }
+    
   },
   actions: 
   {
-    fetchData: async({commit}) => 
+    fetchData: async({commit, state}) => 
     {
+      state.isLoading = true;
       let settingsResp = await RPCRequest.request('get', 'http://localhost:3000/api/settings');
       let settingsData = settingsResp?.settings || [];
-      commit('addSettingsList', settingsData);
       let incedentResp = await RPCRequest.request('get', 'http://localhost:3000/api/incedent');
-      let incedentData = incedentResp?.incedents || [];
-      commit('addIncedentList', incedentData);
-    }
-    
+      let incedentData = incedentResp?.incedents || [];      
+      state.settingsList = settingsData;
+      state.incedentList = incedentData;
+      state.isLoading = false;
+    }    
   },
   modules: {
   }

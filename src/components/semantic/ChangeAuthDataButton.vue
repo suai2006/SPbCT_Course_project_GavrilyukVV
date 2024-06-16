@@ -1,6 +1,7 @@
 <template>
 <td class="right aligned collapsing">
-    <button class="ui blue compact icon button" @click="changeFn">
+    <ErrorMessage :onError="onError" v-on:update:onError="onError = $event" :error="error"/>
+    <button class="ui blue compact icon button" @click="changeFn" style="width: 100%;">
         <i class="edit icon"></i> Изменить
     </button>
     <modal :dialog="dialog"  @close="close">
@@ -39,7 +40,7 @@
 
 <script>
     import modal from '@/components/semantic/Modal.vue';
-    const axios = require('axios');
+    import RPCRequest from '@/assets/javascript/RPCRequest.js';    
     export default 
     {
         props:["field"],
@@ -54,6 +55,11 @@
                     old: null,
                     new: null,
                     confirm: null,
+                },
+                onError:false,
+                error:{
+                    header:"",
+                    message:"",
                 },
                 login:null
             };
@@ -84,6 +90,10 @@
                     new: "Введите новый пароль",
                     confirm: "Повторите новый пароль",
                 };
+            },
+            requestUrl()
+            {
+                return `http://localhost:3000/api/settings/change${this.field}`;
             }
         },      
         methods:{
@@ -91,43 +101,40 @@
             {
                 this.dialog = true;
             },
-            submit()
+            async submit()
             {
-                if(this.field == "login")
-                {
-                    
-                }
-                else if(this.field == "password")
-                {
-
-                }
-
-                this.dialog = false;
+                if(this.field == "login") this.request({login:this.login});
+                else if(this.field == "password") this.request({password: this.password});
             },
             close () 
             {
                 this.dialog = false;
             },
-            async request(data)
+            request(data)
             {
-                 let config = 
+                window.document.body.style.cssText ="opacity:.6; pointer-events:none;";
+                RPCRequest.request('post', this.requestUrl, data, {}).then((resp) => 
                 {
-                    method: 'post',
-                    maxBodyLength: Infinity,
-                    url: `http://localhost:3000/api/settings/change${field}`,
-                    headers: { 
-                        'Content-Type': 'application/json'                    
-                    },
-                    data : data
-                };
-                try 
-                {
-                    let response = await axios.request(config);
-                } 
-                catch (error) 
-                {
-                    console.log(error);
-                }                
+                    window.document.body.style.cssText ="";
+                    if(resp.error)
+                    {
+                        this.error.message = resp.error.message;
+                        this.error.header = resp.error.code;
+                        this.onError = true;
+                        return;
+                    }
+                    if(this.field == "login") this.login = null;
+                    else if(this.field == "password") {
+                        this.password =  
+                        {
+                            old: null,
+                            new: null,
+                            confirm: null,
+                        }
+                    }
+                    this.dialog = false;
+                });
+                              
             },
         },
         watch: 

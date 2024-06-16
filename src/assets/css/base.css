@@ -7,13 +7,30 @@ a {
     display: flex;
     flex-direction: row;
     height: 100%;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap;    
   }
   .content
   {
     flex-grow: 1;
-    padding: 50px 10px;
+    padding: 50px 10px;    
+  }
+  .app_desktop
+  {
     overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 280px;
+  }
+  .app_mobile
+  {
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 59px;
   }
   .navbar
   {
@@ -22,6 +39,14 @@ a {
     display:flex;
     flex-direction: column;
     flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+  .navbar.mobile
+  {
+    width: auto;
   }
   .navbar .logo
   {
@@ -45,6 +70,10 @@ a {
     border-radius: 50%;
     margin: 30px auto;
     box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,.7);
+  }
+  .navbar.mobile .item
+  {
+    border: none;
   }
   .navbar .logo img
   {

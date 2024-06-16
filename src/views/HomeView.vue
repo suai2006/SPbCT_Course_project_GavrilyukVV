@@ -1,14 +1,15 @@
 <template>  
   <Content :title="title">
     <div class="ui cards">
-      <BarChart />
+      <PieChart />
       <UserAction />      
     </div>
     <LastIncedents />
-    <div class="ui cards"><LineChart /></div>      
+    <LineChart />   
   </Content>
 </template>
 <script>  
+  import PieChart from '@/components/home/PieChart.vue';
   import BarChart from '@/components/home/BarChart.vue';
   import UserAction from '@/components/home/UserAction.vue';
   import LastIncedents from '@/components/home/LastIncedents.vue';
@@ -16,7 +17,7 @@
   export default 
   {
     name: 'home',
-    components: { BarChart, UserAction, LastIncedents, LineChart },
+    components: { PieChart, BarChart, UserAction, LastIncedents, LineChart },
     props: {},
     data()
     {

@@ -1,12 +1,12 @@
-<template>  
-<div class="card" style="width: 100%;margin-top: 0;">
-    <div class="content">
-        <div class="header">Статистика использования системы</div>
-        <div class="chart-container" style="position: relative; min-height:220px; width:100%;display: inline-block;vertical-align: top;">
-            <LineChart id="myChart" :options="options" :data="chartData"/>
-        </div>
-    </div>
-</div>    
+<template> 
+<div class="ui segment" style="width: 100%;">
+  <div class="ui dividing header">Использования системы</div>
+  <div class="content">
+      <div class="chart-container" style="position: relative; max-height:210px; height:100%; width:100%;display: inline-block;vertical-align: top;">
+          <LineChart id="myChart" :options="options" :data="chartData"/>
+      </div>
+  </div>
+</div>
 </template>
 <script> 
 import { Line as LineChart } from 'vue-chartjs'

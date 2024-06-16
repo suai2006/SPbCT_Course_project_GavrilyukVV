@@ -11,6 +11,7 @@ process.on('uncaughtException', (err, origin) => {
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require("cookie-parser");
 const registryAPI = require('./api');
 const path = require('path');
 const config = require("../env.config");
@@ -20,14 +21,19 @@ const app = express()
 const host = config.HOST || '0.0.0.0'
 const port = config.PORT || 3000
 app.use(express.json());
+app.use(cookieParser());
 app.use(bodyParser.raw({type: function(){return true;}, limit: '200mb'}));
 app.set('port', port)
 app.use(function (req, res, next) 
 {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
-    if (req.method === 'OPTIONS') return res.sendStatus(200);
+    res.set({
+      'Access-Control-Allow-Origin'  : ['http://localhost:8080'],
+      'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE',
+      'Access-Control-Allow-Credentials':true,
+      'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, X-Requested-With, Range'
+    })
+    
+    if (req.method === 'OPTIONS') return res.status(200).send(true);
     else return next();
 });
 app.use((req, res, next) => 

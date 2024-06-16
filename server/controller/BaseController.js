@@ -5,14 +5,25 @@ const config = require("../../env.config");
 
 class BaseController
 {
-    query(query)
+    async query(query, prepareData = null)
     {
         return new Promise((resolve, reject) => 
         {
-            this.mysql.query(query, function(err, rows, fields) {
-                if(err) reject(err);
-                resolve(rows);
-            })
+            if(!prepareData)
+            {
+                this.mysql.query(query, function(err, rows, fields) {
+                    if(err) reject(err);
+                    resolve(rows);
+                })
+            }
+            else
+            {
+                this.mysql.query(query, prepareData, function(err, rows, fields) {
+                    if(err) reject(err);
+                    resolve(rows);
+                })
+            }
+            
         });
     }
 

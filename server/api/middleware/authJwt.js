@@ -5,47 +5,49 @@ module.exports = (logger) =>
 {
     let verifyToken = (req, res, next) => 
     {
-        const sessionToken = req.rawHeaders.find(f=>f.indexOf("access_token")>=0).split("=")[1];
-        
-        if (!sessionToken) 
+        try 
         {
-            if(req.xhr)
+            //получаем токен из кук
+            let accessToken = req.cookies.access_token;            
+            if (!accessToken) 
             {
-                return res.status(401).send({message: "Unauthorized"});
+                // если не нашли смотрим в заголовках
+                if(!req.headers.authorization) throw new Error("Не передан токен доступа");
+                let authorization = req.headers.authorization;
+                let [key, token] = authorization.split(' ');                
+                accessToken = token;
             }
-            res.redirect('/auth');
-        }
-        else 
-        {
+            //если токен пришел в заголовка но не правильно
+            if (!accessToken) throw new Error("Не передан токен доступа");
+    
             const cert = fs.readFileSync(process.cwd() + '/server/core/keys/public.pem');
             var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-            jwt.verify(sessionToken, cert, (err, decoded) => {
+            //выполняем верификацию токена
+            jwt.verify(accessToken, cert, (err, decoded) => 
+            {
                 if (err) 
                 {
+                    //в случае ошибки логируем ее и отправляем код 401
                     logger.log(`method : ${req.method} URL: ${req.originalUrl} status: 401`);
                     logger.log(`method : ${req.method} URL: ${req.originalUrl} message: ${err.message}`);
-                    if(req.xhr)
-                    {
-                        return res.status(401).send({message: "Unauthorized"});
-                    }
-                    else
-                    {
-                        res.clearCookie('jwt');
-                        res.redirect('/auth');
-                        return;
-                    }                    
+                    return res.status(401).send({message: "Unauthorized"});                   
                 }
+                /**
+                 * В случае если токен валидный но ip адрес 
+                 * авторизации не совпадает с ip запроса, 
+                 * считаем это ошибкой
+                 */
+                if(ip !== decoded.ip) return res.status(401).send({message: "Unauthorized"});
 
-                if(ip !== decoded.ip)
-                {
-                    res.clearCookie('jwt');
-                    res.redirect('/auth');
-                    return;
-                } 
-                                               
+                logger.log(`Верификация пройдена`);                                 
                 next();
-            });
-        }
+            });  
+        } 
+        catch (error) 
+        {
+            logger.error(error);   
+            return res.status(401).send({message: "Unauthorized"});
+        }        
     };
 
     return {

@@ -13,6 +13,6 @@ module.exports = function(app, logger, mysql)
     router.post('/', сontroller.setSettings.bind(сontroller));
     router.post('/changelogin', сontroller.changeLogin.bind(сontroller));
     router.post('/changepassword', сontroller.changePassword.bind(сontroller));
-    //app.use("/api/settings", authJwt.verifyToken, router);
-    app.use("/api/settings", router);
+    app.use("/api/settings", authJwt.verifyToken, router);
+    // app.use("/api/settings", router);
 }

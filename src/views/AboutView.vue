@@ -1,38 +1,34 @@
 <template>
   <Content :title="title">
-    <h3 class="first">Информация по полученным инцедентам</h3>
-    <table class="ui celled padded table">
-        <thead>
-          <tr>
-            <th class="single line">Событие</th>           
-            <th>Датчик</th>            
-            <th>Помещение</th>
-            <th>Время</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr v-for="item in incedentList" :key="item.id" :ref="item.id">
-              <td><div class="ui star rating" data-rating="3" data-max-rating="3">{{item.message}}</div></td>              
-              <td><div class="ui star rating" data-rating="3" data-max-rating="3"></div>{{item.name}}</td>
-              <td><div class="ui star rating" data-rating="3" data-max-rating="3">{{item.room}}</div></td>   
-              <td><div class="ui star rating" data-rating="3" data-max-rating="3">{{item.datetime}}</div></td>           
-            </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colspan="5">
-              <div class="ui right floated pagination menu">
-                  <a class="icon item"><i class="left chevron icon"></i></a>
-                  <a class="item">1</a>
-                  <a class="item">2</a>
-                  <a class="item">3</a>
-                  <a class="item">4</a>
-                  <a class="icon item"><i class="right chevron icon"></i></a>
+    <div class="ui segment">
+      <h3 class="first">Информация по полученным инцедентам</h3>
+      <div v-if="incedentCount" class="ui relaxed divided list">   
+        <div v-for="item in incedentList" :key="item.id" :ref="item.id" class="item">
+          <i class="large exclamation circle middle aligned icon"></i>
+          <div class="content">
+            <div class="header">{{item.message}}</div>
+              <div class="description"> 
+                <p>Время инцедента: {{dateFormat(item.datetime)}}</p>
               </div>
-            </th>
-          </tr>
-        </tfoot>
-      </table>
+            </div>
+        </div>
+      </div> 
+      <div v-else>
+        <div class="ui ignored info attached message">
+          <p>Система не получила список инцедентов.</p>
+        </div>
+        <div class="ui ignored bottom attached warning message">
+          <p>
+            Возможные причины:            
+          </p>
+          <div class="ui bulleted list">
+            <div class="item">еще не происходило срабатывание системы безопасности и записей о событиях нет;</div>
+            <div class="item">данные были удалены или премещены.</div>
+          </div>
+          <p></p>
+        </div>
+      </div> 
+    </div>      
   </Content>
 </template>
 <script>
@@ -56,19 +52,33 @@
         incedentList()
         {
             return this.$store.state.incedentList;
-        },            
+        },     
+        incedentCount()
+        {
+          return this.incedentList.length;
+        }       
     }, 
-    methods: {}     
+    methods: {
+      dateFormat(date)
+      {
+        return new Date(date.split('.')[0]).toLocaleString();
+      }
+    }     
   }
 </script>
 <style scoped>
-.ui.table {
-  background: #F9FAFB;
+.incedents {
+  background: #FFFFFF;
+  padding: 1.5em 1em;
+  border-radius: 0.28571429rem;
+  box-shadow: 0px 1px 3px 0px #D4D4D5, 0px 0px 0px 1px #D4D4D5;
+  font-size: 1em;
+  order: none;
 }
 tbody {
     display:block;
-    height: calc(100vh - 300px);
-    max-height:calc(100vh - 300px);
+    height: calc(100vh - 310px);
+    max-height:calc(100vh - 310px);
     overflow-y:scroll;
     background: #FFFFFF;
 }

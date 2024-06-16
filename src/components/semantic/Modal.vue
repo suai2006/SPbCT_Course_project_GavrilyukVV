@@ -1,5 +1,6 @@
 <template>
-    <sui-modal v-model="showDialog" size="small">
+   
+    <sui-modal v-model="showDialog" size="small" class="test" active>
         <sui-modal-header><slot name="header">Просмотр информации</slot></sui-modal-header>
         <sui-modal-content>
             <sui-modal-description>
@@ -29,11 +30,14 @@ export default
             get: function(){
                 return this.dialog;
             },
-            set: function(newValue){
-                console.log(newValue)
+            set: function(newValue)
+            {
                 this.$emit("close");
             }   
         },
     }
 }
 </script>
+<style scoped>
+
+</style>

@@ -42,7 +42,7 @@ class AuthController
     {
         const privateKey = fs.readFileSync(process.cwd() + '/server/core/keys/private.key');
         //24*60*60
-        const token = jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: 24*60*60*1000, subject:"access" });
+        const token = jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: '1h', subject:"access" });        
         return {token};
     }
 

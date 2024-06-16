@@ -1,40 +1,41 @@
 <template>
     <transition name="fade">
-      <sui-message v-if="showError" class="ui error message"
-        :header=error.header
-        :content=error.message
-        dismissable
-        @dismiss="handleDismiss"/>
+      <sui-message v-if="onError" :class="classList" dismissable @dismiss="handleDismiss">
+        <i class="icon exclamation triangle"></i>
+        <sui-message-content>
+            <sui-message-header>{{ error.header }}</sui-message-header>
+            <p>{{ error.message }}</p>
+        </sui-message-content>        
+        </sui-message>        
     </transition>
 </template>
 <script>
     export default 
     {
-        props:["onError","error"],
+        props:["onError","error", "timer"],
         name: 'errorMessage',
         data()
         {
             let obj = {
-                showError : false,
+                classList: "ui large icon message error",                
             };
             return obj;
         },
+        
         methods:{
             handleDismiss() {
-                this.showError = false;
+                this.$emit('update:onError', false);
             },
         },
         watch: 
         {
              onError(newVal, oldVal)
              {
-                if(newVal) 
+                if(newVal)
                 {
-                    this.showError = true;
-                    setTimeout(() =>
-                    {
-                        this.showError = false;
-                    }, 3000);
+                    setTimeout(() => {
+                        this.$emit('update:onError', false);
+                    }, this.timer || 1500);
                 }
              }
         }     
@@ -51,7 +52,7 @@
          opacity: 0;
          transition: opacity .5s;
     }
-    .ui.message
+    .ui.error.message
     {
         margin: 0;
         position: fixed;
@@ -60,5 +61,11 @@
         right: 50%;
         transform: translate(-50%, 0);
         top: 50px;
+        background: #CC0000;
+        color: #fff;
+    }
+    .ui.error.message .header
+    {
+        color: #fff;
     }
 </style>

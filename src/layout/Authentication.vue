@@ -74,6 +74,7 @@ export default
                     data : data
                 };
                 let response = await axios.request(config);
+               
                 this.$emit('signin', response.data);
             } 
             catch (error) 

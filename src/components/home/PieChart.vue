@@ -1,9 +1,9 @@
 <template>  
     <div class="card" style="width: auto;">
         <div class="content">
-        <div class="header">Статистика срабатывания датчиков</div>
-        <div class="chart-container" style="position: relative; min-height:304px; max-width: 609px; width:100%;display: inline-block;vertical-align: top;">
-            <Bar id="bar-chart-id" :options="barOptions" :data="chartData"/>
+        <div class="ui dividing header">Информация по датчикам</div>
+        <div class="chart-container" style="position: relative; width: 100%;height: 100%; display: inline-block;vertical-align: top;">
+            <Pie id="bar-chart-id" :options="barOptions" :data="chartData"/>
         </div>
         </div>        
     </div>
@@ -14,7 +14,7 @@
   ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, BarElement, LinearScale);
   export default 
   {
-    components: { Bar },
+    components: { Pie },
     data()
     {
       let obj = 
@@ -47,7 +47,7 @@
                   display: true,
                   text: '',
               },           
-              legend: {display: false}
+              legend: {position:"bottom"}
             }
         },
       };

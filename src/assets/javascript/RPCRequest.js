@@ -1,43 +1,69 @@
 import axios from "axios";
-//import {SweetAlert} from "./SweetAlert";
 export default class RPCRequest 
 {
-    static async request( method='get', url, data={}, options={})
+    static async request( method='get', url, data={}, headersIn = {}, options={})
     {
         let res = null
         try 
         {
+            let headers = { 
+                'Content-Type': 'application/json', 
+                'X-Requested-With': 'XMLHttpRequest',
+                ...headersIn                    
+            };
+            
             let config = 
             {
                 method: method,
                 maxBodyLength: Infinity,
                 url: url,
-                headers: { 
-                    'Content-Type': 'application/json'                    
-                },
-                ...options
+                headers,
+                withCredentials: true,
+                ...options            
             };
+
             if(data) config.data = data;
             let response = await axios.request(config);
             res = response.data;
         } 
         catch (error) 
         {
-            console.log(error);
+            //RPCRequest.error(url, error.message);
+            res = {error};
         }
         return res
     }
 
     static error(url, message, code='')
     {        
-        if(message.indexOf("401") >= 0){
+        if(message.indexOf("401") >= 0)
+        {
             window.document.body.style.cssText ="opacity:.6; pointer-events:none;";
+            RPCRequest.deleteAllCookies();
             window.location.reload();
             return;
         }
-        console.error(`[${url}][${code}] ${message}`)
-        //SweetAlert.error('Ошибка', message)
     }
+
+    static deleteAllCookies() {
+        const cookies = document.cookie.split("; ");
+      
+        cookies.forEach((cookie) => {
+          const name = cookie.split("=").shift();
+          this.deleteCookie(name);
+        });
+      
+        // Some sites backup cookies in `localStorage`
+        window.localStorage.clear();
+      }
+
+    static deleteCookie(name) {
+        document.cookie = 
+          `${name}=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/`;
+      
+          // Remove it from local storage too
+          window.localStorage.removeItem(name);
+      }
 
     static resource(resource)
     {

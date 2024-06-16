@@ -9,8 +9,8 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import Content from '@/components/Content.vue';
 import ErrorMessage from '@/components/semantic/ErrorMessage.vue';
 import SuiVue from 'semantic-ui-vue';
-Vue.use(VueCookies,{ expires: "3600s"});
-Vue.use(SuiVue,{ expires: "3600s"});
+Vue.use(VueCookies,{ expires: 2147483647 });
+Vue.use(SuiVue);
 Vue.directive('focus', {
     inserted: function (el) {
         el.focus()

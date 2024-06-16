@@ -1,7 +1,7 @@
 <template>
     <div class="inline field">
-        <div ref="checkboxWrap" class="ui toggle checkbox">
-            <input ref="checkbox" type="checkbox" tabindex="0" :checked="isActive" class="hidden">
+        <div ref="checkboxWrap" :class="classList" @click="change">
+            <input ref="checkbox" type="checkbox" tabindex="0" :checked="checked" class="hidden">
             <label></label>
         </div>
     </div>
@@ -11,26 +11,37 @@ export default
 {
     name: 'settings',
     components: {},
-    props:["checked"],
+    props:["checked", "name", "checkboxEvent"],
     data()
     {
         return {
-            isActive:false
+            classList: "ui toggle checkbox"
         }
     },
-    mounted()
-    {
-        this.isActive = this.checked;
-        this.$refs.checkboxWrap.onclick = () => this.isActive = !this.isActive;
-    },
-    methods:{},
-    watch: 
-    {
-        isActive()
+    mounted(){},
+    methods:{
+        change()
         {
-            this.$refs.checkboxWrap.classList.toggle("checked");
-            this.$refs.checkbox.checked = this.$refs.checkbox.checked ? false : true;
+            this.value = !this.value;
         }
+    },
+    watch: {},
+    computed:
+    {
+        value: 
+        {
+            get: function()
+            {
+                if(this.checked) this.classList = "ui toggle checkbox checked";
+                return this.checked;
+            },
+            set: function(newValue)
+            {
+                if(newValue)  this.classList = "ui toggle checkbox checked";
+                else  this.classList = "ui toggle checkbox";
+                this.$emit("checkboxEvent", {id: this.name, value: newValue});        
+            }   
+        },
     }
 }
 </script>
